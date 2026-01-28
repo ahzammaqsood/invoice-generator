@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ZM Invoice">
     <meta name="format-detection" content="telephone=no">
-    <title>ZM Mahal Invoice Pro</title>
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+    <title>ZM Mahal Invoice</title>
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
     <style>
         /* CSS Reset and Base */
         :root {
@@ -58,8 +58,6 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            user-select: none;
         }
 
         html, body {
@@ -71,15 +69,7 @@
             background: var(--primary-bg);
             color: var(--primary-text);
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        input, textarea, select, button {
-            font-size: 16px !important;
-            font-family: inherit;
-            -webkit-appearance: none;
-            appearance: none;
-            border-radius: 0;
+            -moz-osx-x-smoothing: grayscale;
         }
 
         /* App Container */
@@ -221,7 +211,7 @@
         .input-field {
             width: 100%;
             padding: 16px;
-            font-size: 16px;
+            font-size: 16px !important;
             border: 2px solid var(--border-color);
             background: var(--primary-bg);
             color: var(--primary-text);
@@ -232,7 +222,6 @@
         .input-field:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
         }
 
         .input-field[readonly] {
@@ -244,22 +233,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-        }
-
-        /* Select Styling */
-        .select-wrapper {
-            position: relative;
-        }
-
-        .select-wrapper::after {
-            content: '▼';
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 12px;
-            color: var(--secondary-text);
-            pointer-events: none;
         }
 
         /* Items Section */
@@ -346,7 +319,7 @@
         .item-input {
             width: 100%;
             padding: 12px;
-            font-size: 16px;
+            font-size: 16px !important;
             border: 1px solid var(--border-color);
             background: var(--tertiary-bg);
             color: var(--primary-text);
@@ -425,9 +398,11 @@
         }
 
         .preview-container {
-            width: 100%;
+            width: 210mm;
+            min-height: 297mm;
             background: white;
             color: black;
+            margin: 0 auto;
         }
 
         .preview-header {
@@ -438,9 +413,10 @@
         }
 
         .preview-header h2 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             margin-bottom: 8px;
+            letter-spacing: 2px;
         }
 
         .preview-header p {
@@ -458,7 +434,7 @@
             gap: 30px;
             margin-bottom: 30px;
             padding-bottom: 30px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid #000000;
         }
 
         .preview-from h3,
@@ -481,7 +457,7 @@
             text-align: left;
             font-weight: 600;
             font-size: 14px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid #000000;
         }
 
         .preview-table td {
@@ -518,19 +494,20 @@
         .preview-footer {
             text-align: center;
             padding: 30px;
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px solid #000000;
             margin-top: 30px;
         }
 
         .preview-signature {
-            margin-top: 40px;
+            margin-top: 60px;
             text-align: right;
         }
 
         .signature-line {
             border-top: 2px solid #000000;
-            width: 200px;
+            width: 250px;
             margin: 4px 0;
+            display: inline-block;
         }
 
         /* Bottom Navigation */
@@ -729,24 +706,12 @@
         }
 
         /* Mobile Optimizations */
-        @supports (-webkit-touch-callout: none) {
-            input, select, textarea {
-                font-size: 16px !important;
-            }
-            
-            .main-content {
-                padding-bottom: calc(16px + var(--safe-bottom) + 90px);
-            }
-            
-            .bottom-nav {
-                padding-bottom: calc(20px + var(--safe-bottom));
-            }
-        }
-
-        /* Fix for iOS input zoom */
-        @media screen and (max-width: 768px) {
-            input, select, textarea {
-                font-size: 16px !important;
+        @media (max-width: 768px) {
+            .preview-container {
+                width: 100%;
+                min-height: auto;
+                transform: scale(0.85);
+                transform-origin: top center;
             }
         }
 
@@ -771,6 +736,7 @@
                 padding: 0;
                 border: none;
                 box-shadow: none;
+                background: white;
             }
             
             .app-header,
@@ -834,10 +800,6 @@
         ::-webkit-scrollbar-thumb {
             background: var(--border-color);
             border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-text);
         }
     </style>
 </head>
@@ -972,8 +934,7 @@
                                 <h3>From</h3>
                                 <p><strong>ZM Mahal</strong><br>
                                 Clothing Store<br>
-                                Contact: 0300-1234567<br>
-                                Email: info@zmmahal.com</p>
+                                Contact: 0300-1234567</p>
                             </div>
                             <div class="preview-to">
                                 <h3>To</h3>
@@ -1071,10 +1032,6 @@
         </div>
     </div>
 
-    <!-- External Libraries -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
     <script>
         // Global variables
         let currentStep = 1;
@@ -1099,10 +1056,12 @@
             initTheme();
             updateStepIndicator();
             
-            // Fix for iOS input zoom
+            // Fix iOS input zoom
             document.addEventListener('focusin', function(e) {
-                if (window.innerWidth <= 768 && (e.target.matches('input') || e.target.matches('textarea'))) {
-                    document.body.style.zoom = 1;
+                if (e.target.matches('input') || e.target.matches('textarea')) {
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                    }, 100);
                 }
             });
         });
@@ -1144,15 +1103,13 @@
         }
 
         // Show loading
-        function showLoading(message) {
-            const loading = document.getElementById('loading');
-            loading.classList.add('show');
+        function showLoading() {
+            document.getElementById('loading').classList.add('show');
         }
 
         // Hide loading
         function hideLoading() {
-            const loading = document.getElementById('loading');
-            loading.classList.remove('show');
+            document.getElementById('loading').classList.remove('show');
         }
 
         // Update step indicator
@@ -1322,17 +1279,6 @@
             renderItems();
             updateCalculations();
             showToast('Item removed', 'success');
-        }
-
-        // Clear all items
-        function clearAllItems() {
-            if (items.length > 1 && confirm('Remove all items except the first one?')) {
-                const firstItem = items[0];
-                items = [firstItem];
-                renderItems();
-                updateCalculations();
-                showToast('Items cleared', 'success');
-            }
         }
 
         // Render items
@@ -1505,20 +1451,26 @@
             document.getElementById('actionSheet').classList.remove('show');
         }
 
-        // Save as JPG with proper A4 dimensions
+        // Save as JPG - FIXED VERSION
         async function saveAsJPG() {
             showLoading();
             
             try {
-                const preview = document.querySelector('.preview-container');
+                // Store original styles
+                const originalStyles = {
+                    width: document.querySelector('.preview-container').style.width,
+                    minHeight: document.querySelector('.preview-container').style.minHeight,
+                    margin: document.querySelector('.preview-container').style.margin
+                };
                 
-                // Set exact A4 dimensions for capture
+                // Set exact A4 dimensions
+                const preview = document.querySelector('.preview-container');
                 preview.style.width = '210mm';
                 preview.style.minHeight = '297mm';
-                preview.style.padding = '0';
                 preview.style.margin = '0';
                 preview.style.boxSizing = 'border-box';
                 
+                // Use html2canvas
                 const canvas = await html2canvas(preview, {
                     scale: 2,
                     useCORS: true,
@@ -1528,52 +1480,36 @@
                     foreignObjectRendering: false
                 });
                 
+                // Generate filename
+                const buyerName = document.getElementById('buyerName').value.trim();
+                const cleanName = buyerName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
+                const date = document.getElementById('invoiceDate').value;
+                const fileName = `ZM_Mahal_Invoice_${cleanName}_${date}.jpg`;
+                
                 // Create download link
                 const link = document.createElement('a');
-                const buyerName = document.getElementById('buyerName').value.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'invoice';
-                const date = document.getElementById('invoiceDate').value;
-                const fileName = `ZM_Mahal_Invoice_${buyerName}_${date}.jpg`;
-                
                 link.download = fileName;
-                link.href = canvas.toDataURL('image/jpeg', 0.95);
                 
-                // Create a click event and trigger download
-                const clickEvent = new MouseEvent('click', {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true
-                });
-                link.dispatchEvent(clickEvent);
+                // Convert canvas to JPG
+                const imageData = canvas.toDataURL('image/jpeg', 1.0);
+                link.href = imageData;
                 
-                // Fallback for iOS Safari
-                if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-                    const reader = new FileReader();
-                    canvas.toBlob(function(blob) {
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function() {
-                            const base64data = reader.result;
-                            const newLink = document.createElement('a');
-                            newLink.download = fileName;
-                            newLink.href = base64data;
-                            document.body.appendChild(newLink);
-                            newLink.click();
-                            document.body.removeChild(newLink);
-                        };
-                    }, 'image/jpeg', 0.95);
-                }
+                // Trigger download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
                 
                 showToast('Invoice saved as JPG', 'success');
                 
-                // Reset styles
+                // Restore original styles
                 setTimeout(() => {
-                    preview.style.width = '';
-                    preview.style.minHeight = '';
-                    preview.style.padding = '';
-                    preview.style.margin = '';
-                }, 1000);
+                    preview.style.width = originalStyles.width;
+                    preview.style.minHeight = originalStyles.minHeight;
+                    preview.style.margin = originalStyles.margin;
+                }, 100);
                 
             } catch (error) {
-                console.error('Error saving JPG:', error);
+                console.error('JPG Error:', error);
                 showToast('Error saving JPG. Please try again.', 'error');
             } finally {
                 hideLoading();
@@ -1581,20 +1517,26 @@
             }
         }
 
-        // Save as PDF with proper A4 dimensions
+        // Save as PDF - FIXED VERSION
         async function saveAsPDF() {
             showLoading();
             
             try {
-                const preview = document.querySelector('.preview-container');
+                // Store original styles
+                const originalStyles = {
+                    width: document.querySelector('.preview-container').style.width,
+                    minHeight: document.querySelector('.preview-container').style.minHeight,
+                    margin: document.querySelector('.preview-container').style.margin
+                };
                 
-                // Set exact A4 dimensions for capture
+                // Set exact A4 dimensions
+                const preview = document.querySelector('.preview-container');
                 preview.style.width = '210mm';
                 preview.style.minHeight = '297mm';
-                preview.style.padding = '0';
                 preview.style.margin = '0';
                 preview.style.boxSizing = 'border-box';
                 
+                // Use html2canvas
                 const canvas = await html2canvas(preview, {
                     scale: 2,
                     useCORS: true,
@@ -1603,6 +1545,12 @@
                     allowTaint: true,
                     foreignObjectRendering: false
                 });
+                
+                // Generate filename
+                const buyerName = document.getElementById('buyerName').value.trim();
+                const cleanName = buyerName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
+                const date = document.getElementById('invoiceDate').value;
+                const fileName = `ZM_Mahal_Invoice_${cleanName}_${date}.pdf`;
                 
                 // Create PDF
                 const { jsPDF } = window.jspdf;
@@ -1615,28 +1563,23 @@
                 const imgWidth = 210;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
                 
-                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
                 pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
                 
                 // Save PDF
-                const buyerName = document.getElementById('buyerName').value.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'invoice';
-                const date = document.getElementById('invoiceDate').value;
-                const fileName = `ZM_Mahal_Invoice_${buyerName}_${date}.pdf`;
-                
                 pdf.save(fileName);
                 
                 showToast('Invoice saved as PDF', 'success');
                 
-                // Reset styles
+                // Restore original styles
                 setTimeout(() => {
-                    preview.style.width = '';
-                    preview.style.minHeight = '';
-                    preview.style.padding = '';
-                    preview.style.margin = '';
-                }, 1000);
+                    preview.style.width = originalStyles.width;
+                    preview.style.minHeight = originalStyles.minHeight;
+                    preview.style.margin = originalStyles.margin;
+                }, 100);
                 
             } catch (error) {
-                console.error('Error saving PDF:', error);
+                console.error('PDF Error:', error);
                 showToast('Error saving PDF. Please try again.', 'error');
             } finally {
                 hideLoading();
@@ -1664,8 +1607,7 @@
                 if (navigator.share) {
                     await navigator.share({
                         title: 'Invoice from ZM Mahal',
-                        text: shareText,
-                        url: window.location.href
+                        text: shareText
                     });
                 } else {
                     // Copy to clipboard as fallback
@@ -1762,58 +1704,25 @@
                 });
             });
             
-            // Keyboard shortcuts
+            // Prevent form submission
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.target.matches('textarea')) {
+                if (e.key === 'Enter') {
                     e.preventDefault();
-                    nextStep();
-                }
-                
-                if (e.key === 'Escape' && document.getElementById('overlay').classList.contains('show')) {
-                    closeActionSheet();
                 }
             });
-            
-            // Prevent iOS zoom on input focus
-            document.addEventListener('touchstart', function(e) {
-                if (e.target.matches('input') || e.target.matches('textarea') || e.target.matches('select')) {
-                    e.target.style.fontSize = '16px';
-                }
-            });
-            
-            // Handle iOS keyboard closing
-            document.addEventListener('touchend', function(e) {
-                if (!e.target.matches('input') && !e.target.matches('textarea') && !e.target.matches('select')) {
-                    document.activeElement.blur();
-                }
-            });
-            
-            // Fix for iOS Safari download issues
-            if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-                document.addEventListener('touchstart', function() {}, { passive: true });
-            }
         }
 
         // iOS specific fixes
         if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-            // Fix for iOS viewport height
+            // Fix viewport height
             function setAppHeight() {
-                const app = document.getElementById('app');
-                app.style.height = window.innerHeight + 'px';
+                const doc = document.documentElement;
+                doc.style.setProperty('--app-height', `${window.innerHeight}px`);
             }
             
             window.addEventListener('resize', setAppHeight);
             window.addEventListener('orientationchange', setAppHeight);
             setAppHeight();
-            
-            // Fix for iOS input zoom
-            document.addEventListener('focusin', function(e) {
-                if (e.target.matches('input') || e.target.matches('textarea')) {
-                    setTimeout(() => {
-                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
-                }
-            });
         }
     </script>
 </body>
