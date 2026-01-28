@@ -4,37 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ZM Invoice">
+    <meta name="format-detection" content="telephone=no">
     <title>ZM Mahal Invoice</title>
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #000000;
-            --border-color: #000000;
-            --input-bg: #ffffff;
-            --input-border: #000000;
-            --button-bg: #ffffff;
-            --button-border: #000000;
-            --section-bg: #ffffff;
-            --preview-bg: #ffffff;
-            --shadow-color: rgba(0,0,0,0.1);
-            --hover-bg: #f5f5f5;
+            --primary-color: #000000;
+            --secondary-color: #666666;
+            --background-color: #ffffff;
+            --surface-color: #f8f9fa;
+            --border-color: #e0e0e0;
+            --success-color: #34C759;
+            --danger-color: #FF3B30;
+            --warning-color: #FF9500;
+            --info-color: #007AFF;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --text-disabled: #999999;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
         }
 
         [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #ffffff;
-            --border-color: #ffffff;
-            --input-bg: #1e1e1e;
-            --input-border: #ffffff;
-            --button-bg: #1e1e1e;
-            --button-border: #ffffff;
-            --section-bg: #1e1e1e;
-            --preview-bg: #1e1e1e;
-            --shadow-color: rgba(255,255,255,0.1);
-            --hover-bg: #2e2e2e;
+            --primary-color: #ffffff;
+            --secondary-color: #8E8E93;
+            --background-color: #000000;
+            --surface-color: #1C1C1E;
+            --border-color: #38383A;
+            --text-primary: #ffffff;
+            --text-secondary: #8E8E93;
+            --text-disabled: #6D6D72;
         }
 
         * {
@@ -42,261 +51,401 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            -webkit-text-size-adjust: 100%;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, textarea, select, button {
+            -webkit-appearance: none;
+            appearance: none;
+            -webkit-user-select: text;
+            user-select: text;
+            font-family: inherit;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
+            background: var(--background-color);
+            color: var(--text-primary);
             line-height: 1.5;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            transition: background-color 0.3s, color 0.3s;
+            padding: 0;
+            margin: 0;
+            overscroll-behavior: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
         }
 
-        .app-container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 0 16px;
-            padding-bottom: 100px;
+        #app {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
         }
 
         /* Header */
-        .app-header {
+        .header {
             position: sticky;
             top: 0;
-            background-color: var(--bg-color);
-            padding: 16px 0;
-            border-bottom: 2px solid var(--border-color);
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            z-index: 1000;
+            background: var(--background-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: calc(12px + var(--safe-top)) 16px 12px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
 
-        .app-title h1 {
+        .header-title h1 {
             font-size: 22px;
             font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 2px;
         }
 
-        .app-title p {
+        .header-subtitle {
             font-size: 14px;
-            opacity: 0.8;
+            color: var(--text-secondary);
+            font-weight: 400;
         }
 
-        .theme-toggle {
-            width: 44px;
-            height: 44px;
-            border-radius: 22px;
-            border: 2px solid var(--border-color);
-            background: var(--button-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
-            padding: 0;
-        }
-
-        /* Tabs Navigation */
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid var(--border-color);
-            margin: 16px 0;
-            position: sticky;
-            top: 90px;
-            background-color: var(--bg-color);
-            z-index: 90;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 14px;
-            text-align: center;
-            border: none;
-            background: transparent;
-            color: var(--text-color);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            border-bottom: 3px solid var(--border-color);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Form Sections */
-        .form-section {
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .section-actions {
+        .header-actions {
             display: flex;
             gap: 8px;
         }
 
-        .action-btn {
-            padding: 6px 12px;
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 22px;
             border: 1px solid var(--border-color);
-            background: var(--button-bg);
-            color: var(--text-color);
+            background: var(--surface-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+            background: var(--border-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            height: calc(100vh - 73px - var(--safe-top) - 80px - var(--safe-bottom));
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 16px;
+            padding-bottom: calc(16px + var(--safe-bottom));
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background: var(--surface-color);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 14px;
-            border-radius: 4px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--background-color);
+            transform: scale(1.1);
+        }
+
+        .step.completed {
+            background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 56px;
+            padding: 0 16px;
+            font-size: 17px;
+            border: 2px solid var(--border-color);
+            background: var(--background-color);
+            color: var(--text-primary);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-field[readonly] {
+            background: var(--surface-color);
+            opacity: 0.7;
+        }
+
+        .input-field.error {
+            border-color: var(--danger-color);
+        }
+
+        .input-help {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .input-error {
+            font-size: 12px;
+            color: var(--danger-color);
+            margin-top: 4px;
+            display: none;
+        }
+
+        .input-field.error + .input-error {
+            display: block;
+        }
+
+        /* Select Wrapper */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        /* Items Table */
+        .items-container {
+            overflow: visible;
+        }
+
+        .items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .items-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-card {
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .item-card:active {
+            transform: scale(0.99);
+        }
+
+        .item-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .item-index {
+            width: 24px;
+            height: 24px;
+            background: var(--surface-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .item-remove {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--danger-color);
             cursor: pointer;
         }
 
-        /* Input Grid */
-        .input-grid {
+        .item-remove:active {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .item-fields {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
         }
 
-        .input-row {
-            display: flex;
+        .item-field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            align-items: flex-end;
         }
 
-        .input-row .input-group {
-            flex: 1;
+        .item-field {
+            position: relative;
         }
 
-        .input-group {
-            margin-bottom: 0;
-        }
-
-        .input-group label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: var(--text-color);
-            opacity: 0.9;
-        }
-
-        .input-group input,
-        .input-group select {
+        .item-field input {
             width: 100%;
-            padding: 16px;
-            font-size: 17px;
-            border: 2px solid var(--border-color);
-            background: var(--input-bg);
-            color: var(--text-color);
-            border-radius: 8px;
-            -webkit-appearance: none;
-            appearance: none;
-            transition: all 0.2s;
-        }
-
-        .input-group input:focus,
-        .input-group select:focus {
-            outline: none;
-            border-color: var(--text-color);
-            box-shadow: 0 0 0 3px var(--shadow-color);
-        }
-
-        .input-group input[readonly] {
-            background: var(--hover-bg);
-            opacity: 0.7;
-        }
-
-        /* Items Table */
-        .items-table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin: 12px 0;
-            border-radius: 8px;
-            border: 2px solid var(--border-color);
-        }
-
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-
-        .items-table thead {
-            background: var(--hover-bg);
-        }
-
-        .items-table th {
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 14px;
-            border-bottom: 2px solid var(--border-color);
-            white-space: nowrap;
-        }
-
-        .items-table td {
-            padding: 12px 8px;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: top;
-        }
-
-        .items-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .items-table input {
-            width: 100%;
-            padding: 12px;
+            height: 48px;
+            padding: 0 12px;
             font-size: 16px;
             border: 1px solid var(--border-color);
-            background: var(--input-bg);
-            color: var(--text-color);
-            border-radius: 6px;
+            background: var(--surface-color);
+            color: var(--text-primary);
+            border-radius: var(--radius-sm);
         }
 
-        .remove-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 22px;
-            border: 2px solid var(--border-color);
-            background: var(--button-bg);
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: all 0.2s;
+        .item-field input:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
-        .remove-btn:active {
-            transform: scale(0.95);
+        .item-amount {
+            text-align: right;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+            padding: 12px;
+            background: var(--surface-color);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
         }
 
         /* Summary Cards */
@@ -304,14 +453,13 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
-            margin-top: 16px;
         }
 
         .summary-card {
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
             padding: 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            background: var(--section-bg);
         }
 
         .summary-row {
@@ -326,219 +474,284 @@
             border-bottom: none;
         }
 
-        .grand-total {
-            font-size: 22px;
-            font-weight: 700;
-            border-top: 2px solid var(--border-color);
-            border-bottom: 2px solid var(--border-color);
-            background: var(--hover-bg);
-            margin-top: 4px;
-            border-radius: 8px;
+        .summary-label {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .summary-row.total {
+            background: var(--surface-color);
+            border-radius: var(--radius-sm);
             padding: 16px;
+            margin-top: 8px;
+            border: 2px solid var(--primary-color);
         }
 
-        /* Invoice Preview */
-        .invoice-preview {
-            background: var(--preview-bg);
-            border: 2px solid var(--border-color);
-            padding: 24px;
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-
-        .invoice-header {
-            text-align: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .invoice-header h2 {
-            font-size: 20px;
+        .summary-row.total .summary-label {
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 8px;
         }
 
-        .invoice-details {
+        .summary-row.total .summary-value {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        /* Preview Section */
+        .preview-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 16px;
+        }
+
+        .preview-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .preview-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .preview-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .preview-content {
+            padding: 24px;
+        }
+
+        .preview-info {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
             margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
         }
 
         @media (min-width: 480px) {
-            .invoice-details {
+            .preview-info {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        .invoice-details-group p {
-            margin-bottom: 8px;
+        .preview-from, .preview-to {
+            padding: 16px;
+            background: var(--surface-color);
+            border-radius: var(--radius-md);
         }
 
-        .invoice-details-group strong {
-            display: inline-block;
-            width: 100px;
+        .preview-from h3, .preview-to h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
         }
 
-        .invoice-table {
+        .preview-table {
             width: 100%;
             border-collapse: collapse;
             margin: 24px 0;
         }
 
-        .invoice-table th,
-        .invoice-table td {
-            padding: 12px 8px;
-            border: 1px solid var(--border-color);
+        .preview-table th {
+            background: var(--surface-color);
+            padding: 12px;
             text-align: left;
-        }
-
-        .invoice-table th {
             font-weight: 600;
-            background: var(--hover-bg);
+            font-size: 14px;
+            border-bottom: 2px solid var(--border-color);
         }
 
-        .invoice-summary {
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto;
+        .preview-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .preview-table tfoot td {
+            font-weight: 600;
+            border-bottom: none;
+        }
+
+        .preview-footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
             margin-top: 24px;
         }
 
-        .invoice-footer {
-            text-align: center;
-            margin-top: 48px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .signature {
-            margin-top: 48px;
+        .signature-area {
+            margin-top: 40px;
             text-align: right;
         }
 
         .signature-line {
-            border-top: 1px solid var(--border-color);
+            border-top: 2px solid var(--border-color);
             width: 200px;
-            margin-left: auto;
-            margin-top: 4px;
+            margin: 8px auto 0;
         }
 
-        /* Sticky Bottom Bar */
-        .sticky-bar {
+        /* Bottom Navigation */
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--bg-color);
-            border-top: 2px solid var(--border-color);
-            padding: 16px;
+            background: var(--background-color);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 16px calc(12px + var(--safe-bottom));
             display: flex;
             gap: 12px;
             z-index: 1000;
-            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
         }
 
-        .sticky-bar .btn {
+        .nav-btn {
             flex: 1;
-            padding: 18px;
+            height: 56px;
+            border: none;
+            border-radius: var(--radius-md);
             font-size: 17px;
             font-weight: 600;
-            border: 2px solid var(--border-color);
-            background: var(--button-bg);
-            color: var(--text-color);
-            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transition: all 0.2s ease;
         }
 
-        .sticky-bar .btn:active {
-            transform: translateY(2px);
-            background: var(--hover-bg);
+        .nav-btn:active {
+            transform: scale(0.98);
         }
 
-        /* Action Sheet */
-        .action-sheet {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            right: 0;
-            background: var(--bg-color);
-            border-top: 2px solid var(--border-color);
-            border-radius: 20px 20px 0 0;
-            padding: 20px;
-            z-index: 2000;
-            transition: bottom 0.3s ease;
-            padding-bottom: calc(20px + env(safe-area-inset-bottom));
-            box-shadow: 0 -10px 30px var(--shadow-color);
+        .nav-btn.primary {
+            background: var(--primary-color);
+            color: white;
         }
 
-        .action-sheet.show {
-            bottom: 0;
+        .nav-btn.primary:active {
+            background: var(--secondary-color);
         }
 
-        .action-sheet-header {
-            text-align: center;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
-
-        .action-sheet-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .action-sheet-option {
-            padding: 18px;
+        .nav-btn.secondary {
+            background: var(--surface-color);
+            color: var(--text-primary);
             border: 2px solid var(--border-color);
-            background: var(--button-bg);
-            color: var(--text-color);
-            border-radius: 12px;
-            font-size: 17px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .action-sheet-option:active {
-            background: var(--hover-bg);
+        .nav-btn.secondary:active {
+            background: var(--border-color);
         }
 
-        .action-sheet-cancel {
-            margin-top: 12px;
-            padding: 18px;
-            border: 2px solid var(--border-color);
-            background: var(--hover-bg);
-            color: var(--text-color);
-            border-radius: 12px;
-            font-size: 17px;
-            text-align: center;
-            cursor: pointer;
+        .nav-btn.danger {
+            background: var(--danger-color);
+            color: white;
         }
 
-        /* Overlay */
-        .overlay {
+        /* Modals */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1500;
+            background: rgba(0,0,0,0.5);
             display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
         }
 
-        .overlay.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--background-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            height: 48px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: var(--surface-color);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
         }
 
         /* Toast */
@@ -547,25 +760,108 @@
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--section-bg);
-            border: 2px solid var(--border-color);
-            padding: 16px 24px;
-            border-radius: 12px;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
             z-index: 3000;
             display: none;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            max-width: 90%;
-        }
-
-        .toast.show {
-            display: block;
+            box-shadow: var(--shadow-lg);
             animation: slideDown 0.3s ease;
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
+
+        .toast.show {
+            display: block;
+        }
+
+        .toast.success {
+            background: var(--success-color);
+        }
+
+        .toast.error {
+            background: var(--danger-color);
+        }
+
+        .toast.warning {
+            background: var(--warning-color);
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--background-color);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 4000;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 { margin-bottom: 4px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-5 { margin-bottom: 20px; }
 
         /* Print Styles */
         @media print {
@@ -573,324 +869,353 @@
                 visibility: hidden;
             }
             
-            .invoice-preview, .invoice-preview * {
+            .preview-container,
+            .preview-container * {
                 visibility: visible;
             }
             
-            .invoice-preview {
+            .preview-container {
                 position: absolute;
-                left: 0;
                 top: 0;
-                width: 210mm;
-                min-height: 297mm;
-                padding: 20mm;
+                left: 0;
+                width: 100%;
                 margin: 0;
+                padding: 0;
+                box-shadow: none;
                 border: none;
-                background: white;
-                color: black;
             }
             
-            .sticky-bar,
-            .tabs,
-            .app-header,
-            .overlay,
-            .action-sheet,
-            .toast {
+            .header,
+            .bottom-nav,
+            .modal-overlay,
+            .toast,
+            .loading {
                 display: none !important;
             }
+        }
 
-            @page {
-                size: A4;
-                margin: 0;
+        /* iOS Specific Fixes */
+        @supports (-webkit-touch-callout: none) {
+            .main-content {
+                height: calc(100vh - 73px - var(--safe-top) - 80px);
+                padding-bottom: calc(16px + var(--safe-bottom) + 20px);
+            }
+            
+            .bottom-nav {
+                padding-bottom: calc(20px + var(--safe-bottom));
+            }
+            
+            input, textarea {
+                font-size: 16px !important;
             }
         }
 
-        /* Utility Classes */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-
-        /* Date Picker Customization */
-        input[type="date"] {
-            position: relative;
-        }
-
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .date-wrapper {
-            position: relative;
-        }
-
-        .date-wrapper:after {
-            content: "📅";
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-size: 18px;
-        }
-
-        /* Number Input Spinner Hide */
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
+        /* Chrome/Safari Input Fix */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        /* Loading Spinner */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-color);
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: inline-block;
+        input[type=number] {
+            -moz-appearance: textfield;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .input-field,
+            .nav-btn,
+            .icon-btn,
+            .item-remove {
+                min-height: 44px;
+            }
+            
+            .item-field input {
+                min-height: 44px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div id="app">
         <!-- Header -->
-        <header class="app-header">
+        <header class="header">
             <div class="header-content">
-                <div class="app-title">
+                <div class="header-title">
                     <h1>ZM Mahal Invoice</h1>
-                    <p>Offline Invoice Generator</p>
+                    <div class="header-subtitle">Professional Invoice Generator</div>
                 </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    🌓
-                </button>
+                <div class="header-actions">
+                    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                        🌓
+                    </button>
+                    <button class="icon-btn" id="helpBtn" aria-label="Help">
+                        ?
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Tabs Navigation -->
-        <nav class="tabs">
-            <button class="tab active" data-tab="details">Details</button>
-            <button class="tab" data-tab="items">Items</button>
-            <button class="tab" data-tab="preview">Preview</button>
-        </nav>
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" data-step="1">1</div>
+            <div class="step" data-step="2">2</div>
+            <div class="step" data-step="3">3</div>
+            <div class="step" data-step="4">4</div>
+        </div>
 
-        <!-- Tab Contents -->
-        <div class="tab-content active" id="detailsTab">
-            <!-- Invoice Details Section -->
-            <section class="form-section">
-                <h2 class="section-title">Invoice Details</h2>
-                <div class="input-grid">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Step 1: Basic Info -->
+            <div class="form-section" id="step1">
+                <div class="section-header">
+                    <h2 class="section-title">Invoice Details</h2>
+                </div>
+                <div class="section-subtitle">Enter basic invoice information</div>
+                
+                <div class="form-grid">
                     <div class="input-group">
-                        <label for="sellerName">Seller Name</label>
-                        <input type="text" id="sellerName" value="ZM Mahal" readonly>
+                        <label class="input-label" for="sellerName">Seller Name</label>
+                        <input type="text" id="sellerName" class="input-field" value="ZM Mahal" readonly>
+                        <div class="input-help">Your business name</div>
                     </div>
                     
                     <div class="input-group">
-                        <label for="buyerName">Buyer Name *</label>
-                        <input type="text" id="buyerName" placeholder="Enter buyer name" autocomplete="off" required>
+                        <label class="input-label" for="buyerName">Buyer Name *</label>
+                        <input type="text" id="buyerName" class="input-field" placeholder="Enter buyer name" required>
+                        <div class="input-error">Please enter buyer name</div>
                     </div>
                     
-                    <div class="date-wrapper">
+                    <div class="input-group">
+                        <label class="input-label" for="invoiceDate">Date *</label>
+                        <input type="date" id="invoiceDate" class="input-field" required>
+                        <div class="input-error">Please select date</div>
+                    </div>
+                    
+                    <div class="form-row">
                         <div class="input-group">
-                            <label for="invoiceDate">Date *</label>
-                            <input type="date" id="invoiceDate" required>
-                        </div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="buyerType">Buyer Type</label>
-                        <select id="buyerType">
-                            <option value="pickup">Pickup</option>
-                            <option value="cod">COD / Courier</option>
-                            <option value="online">Online Paid</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="shippingCost">Shipping Cost (PKR)</label>
-                            <input type="number" id="shippingCost" min="0" value="0" step="any">
+                            <label class="input-label" for="buyerType">Buyer Type</label>
+                            <div class="select-wrapper">
+                                <select id="buyerType" class="input-field">
+                                    <option value="pickup">Pickup</option>
+                                    <option value="cod">COD / Courier</option>
+                                    <option value="online">Online Paid</option>
+                                </select>
+                            </div>
                         </div>
                         
                         <div class="input-group">
-                            <label for="taxRate">Tax Rate (%)</label>
-                            <input type="number" id="taxRate" min="0" max="100" step="0.1" value="5">
+                            <label class="input-label" for="taxRate">Tax Rate (%)</label>
+                            <input type="number" id="taxRate" class="input-field" min="0" max="100" step="0.1" value="5">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label class="input-label" for="shippingCost">Shipping (PKR)</label>
+                            <input type="number" id="shippingCost" class="input-field" min="0" value="0" step="any">
+                            <div class="input-help">Enter 0 for no shipping</div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Summary Section -->
-            <section class="form-section">
-                <h2 class="section-title">Summary</h2>
+            <!-- Step 2: Items -->
+            <div class="form-section hidden" id="step2">
+                <div class="section-header">
+                    <h2 class="section-title">Invoice Items</h2>
+                    <button class="icon-btn" id="addItemBtn" aria-label="Add item">+</button>
+                </div>
+                <div class="section-subtitle">Add products or services</div>
+                
+                <div class="items-container">
+                    <div class="items-header">
+                        <div class="items-count">Items: <span id="itemsCount">1</span></div>
+                        <button class="action-btn" id="clearItemsBtn">Clear All</button>
+                    </div>
+                    
+                    <div class="items-list" id="itemsList">
+                        <!-- Items will be added here -->
+                    </div>
+                    
+                    <div class="empty-state hidden" id="emptyItems">
+                        <div class="empty-icon">📦</div>
+                        <div class="empty-text">No items added yet</div>
+                        <button class="nav-btn secondary" id="addFirstItem">Add First Item</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Summary -->
+            <div class="form-section hidden" id="step3">
+                <div class="section-header">
+                    <h2 class="section-title">Invoice Summary</h2>
+                </div>
+                
                 <div class="summary-grid">
                     <div class="summary-card">
                         <div class="summary-row">
-                            <span>Total Quantity:</span>
-                            <span id="totalQuantity">0 pcs</span>
+                            <span class="summary-label">Total Quantity</span>
+                            <span class="summary-value" id="summaryQty">0 pcs</span>
                         </div>
                         <div class="summary-row">
-                            <span>Subtotal:</span>
-                            <span id="subtotal">PKR 0</span>
+                            <span class="summary-label">Subtotal</span>
+                            <span class="summary-value" id="summarySubtotal">PKR 0</span>
                         </div>
                         <div class="summary-row">
-                            <span>Tax (<span id="taxPercent">5</span>%):</span>
-                            <span id="taxAmount">PKR 0</span>
+                            <span class="summary-label">Tax (<span id="summaryTaxRate">5</span>%)</span>
+                            <span class="summary-value" id="summaryTax">PKR 0</span>
                         </div>
                         <div class="summary-row">
-                            <span>Shipping:</span>
-                            <span id="shippingDisplay">PKR 0</span>
+                            <span class="summary-label">Shipping</span>
+                            <span class="summary-value" id="summaryShipping">PKR 0</span>
                         </div>
-                        <div class="summary-row grand-total">
-                            <span>Grand Total:</span>
-                            <span id="grandTotal">PKR 0</span>
+                        <div class="summary-row total">
+                            <span class="summary-label">Grand Total</span>
+                            <span class="summary-value" id="summaryTotal">PKR 0</span>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+                
+                <div class="section-subtitle mb-4">Invoice will be generated based on these totals</div>
+            </div>
 
-        <div class="tab-content" id="itemsTab">
-            <!-- Items Section -->
-            <section class="form-section">
-                <h2 class="section-title">
-                    Items
-                    <div class="section-actions">
-                        <button class="action-btn" id="clearAllMobile">Clear All</button>
-                    </div>
-                </h2>
-                <div class="items-table-container">
-                    <table class="items-table" id="itemsTable">
-                        <thead>
-                            <tr>
-                                <th style="width: 35%;">Description</th>
-                                <th style="width: 20%;">Qty (pcs)</th>
-                                <th style="width: 20%;">Each (PKR)</th>
-                                <th style="width: 20%;">Amount</th>
-                                <th style="width: 5%;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="itemsBody">
-                            <!-- Items will be added here dynamically -->
-                        </tbody>
-                    </table>
+            <!-- Step 4: Preview -->
+            <div class="form-section hidden" id="step4">
+                <div class="section-header">
+                    <h2 class="section-title">Invoice Preview</h2>
                 </div>
-            </section>
-        </div>
-
-        <div class="tab-content" id="previewTab">
-            <!-- Invoice Preview Section -->
-            <section class="form-section">
-                <h2 class="section-title">Invoice Preview</h2>
-                <div class="invoice-preview" id="invoicePreview">
-                    <div class="invoice-header">
-                        <h2>INVOICE / DELIVERY CHALLAN</h2>
+                
+                <div class="preview-container" id="invoicePreview">
+                    <div class="preview-header">
+                        <h2>INVOICE</h2>
+                        <p>ZM Mahal - Clothing Business</p>
                     </div>
                     
-                    <div class="invoice-details">
-                        <div class="invoice-details-group">
-                            <p><strong>Seller:</strong> <span id="previewSeller">ZM Mahal</span></p>
-                            <p><strong>Buyer:</strong> <span id="previewBuyer">[Buyer Name]</span></p>
+                    <div class="preview-content">
+                        <div class="preview-info">
+                            <div class="preview-from">
+                                <h3>From</h3>
+                                <p><strong>ZM Mahal</strong><br>
+                                Clothing & Fashion Store<br>
+                                Contact: 0300-1234567</p>
+                            </div>
+                            <div class="preview-to">
+                                <h3>To</h3>
+                                <p id="previewBuyer">[Buyer Name]</p>
+                                <p id="previewDate">Date: [Date]</p>
+                                <p id="previewType">Type: [Type]</p>
+                            </div>
                         </div>
-                        <div class="invoice-details-group">
-                            <p><strong>Date:</strong> <span id="previewDate">[Date]</span></p>
-                            <p><strong>Type:</strong> <span id="previewBuyerType">[Type]</span></p>
+                        
+                        <table class="preview-table" id="previewTable">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="previewItems">
+                                <!-- Preview items will be added here -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;"><strong>Subtotal:</strong></td>
+                                    <td id="previewSubtotal">PKR 0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;"><strong>Tax:</strong></td>
+                                    <td id="previewTax">PKR 0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;"><strong>Shipping:</strong></td>
+                                    <td id="previewShipping">PKR 0</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
+                                    <td id="previewTotal">PKR 0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
+                        <div class="preview-footer">
+                            <p>Thank you for your business!</p>
+                            <div class="signature-area">
+                                <p>ZM Mahal</p>
+                                <div class="signature-line"></div>
+                                <p>Authorized Signature</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <table class="invoice-table" id="previewTable">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Qty</th>
-                                <th>Each (PKR)</th>
-                                <th>Amount (PKR)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Preview items will be added here -->
-                        </tbody>
-                    </table>
-                    
-                    <div class="invoice-summary">
-                        <div class="summary-row">
-                            <span>Total Quantity:</span>
-                            <span id="previewTotalQty">0 pcs</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Subtotal:</span>
-                            <span id="previewSubtotal">PKR 0</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Tax:</span>
-                            <span id="previewTax">PKR 0</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Shipping:</span>
-                            <span id="previewShipping">PKR 0</span>
-                        </div>
-                        <div class="summary-row grand-total">
-                            <span>Grand Total:</span>
-                            <span id="previewGrandTotal">PKR 0</span>
-                        </div>
-                    </div>
-                    
-                    <div class="invoice-footer">
-                        <p>Received in good condition.</p>
-                    </div>
-                    
-                    <div class="signature">
-                        <p>ZM Mahal</p>
-                        <div class="signature-line"></div>
-                        <p>Authorized Signature</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn secondary" id="prevBtn" disabled>
+                ← Previous
+            </button>
+            <button class="nav-btn primary" id="nextBtn">
+                Next →
+            </button>
+        </nav>
+
+        <!-- Modals -->
+        <div class="modal-overlay" id="exportModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">Export Invoice</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Choose export format:</p>
+                    <div class="form-grid">
+                        <button class="modal-btn primary" data-format="print">Print Invoice</button>
+                        <button class="modal-btn secondary" data-format="jpg">Download as JPG</button>
+                        <button class="modal-btn secondary" data-format="pdf">Download as PDF</button>
+                        <button class="modal-btn secondary" data-format="share">Share via...</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn secondary" id="closeExport">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="helpModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">How to Use</h2>
+                </div>
+                <div class="modal-body">
+                    <h3>Quick Guide:</h3>
+                    <p>1. <strong>Step 1:</strong> Enter buyer details and select type</p>
+                    <p>2. <strong>Step 2:</strong> Add items with quantity and price</p>
+                    <p>3. <strong>Step 3:</strong> Review summary and totals</p>
+                    <p>4. <strong>Step 4:</strong> Preview and export invoice</p>
+                    
+                    <h3 class="mt-4">Tips:</h3>
+                    <p>• Tap + to add items quickly</p>
+                    <p>• Swipe left on items to remove</p>
+                    <p>• Set tax to 0% for tax-free invoices</p>
+                    <p>• Shipping can be added or left as 0</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn primary" id="closeHelp">Got it!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast"></div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
         </div>
     </div>
-
-    <!-- Sticky Bottom Bar -->
-    <div class="sticky-bar">
-        <button class="btn" id="addItemBtn">
-            <span>+ Add Item</span>
-        </button>
-        <button class="btn" id="exportBtn">
-            <span>Export</span>
-        </button>
-    </div>
-
-    <!-- Action Sheet for Export Options -->
-    <div class="overlay" id="overlay"></div>
-    <div class="action-sheet" id="actionSheet">
-        <div class="action-sheet-header">Export Invoice</div>
-        <div class="action-sheet-options">
-            <button class="action-sheet-option" data-action="print">Print Invoice</button>
-            <button class="action-sheet-option" data-action="jpg">Download as JPG</button>
-            <button class="action-sheet-option" data-action="pdf">Download as PDF</button>
-            <button class="action-sheet-option" data-action="share">Share Instructions</button>
-        </div>
-        <button class="action-sheet-cancel" id="cancelAction">Cancel</button>
-    </div>
-
-    <!-- Toast Messages -->
-    <div class="toast" id="toast"></div>
 
     <!-- External Libraries -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -898,30 +1223,36 @@
 
     <script>
         // Global variables
-        let currentTab = 'details';
+        let currentStep = 1;
+        let items = [];
         let isDarkMode = false;
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            // Set today's date in dd/mm/yyyy format
+            // Set today's date
             const today = new Date();
             const day = String(today.getDate()).padStart(2, '0');
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const year = today.getFullYear();
             document.getElementById('invoiceDate').value = `${year}-${month}-${day}`;
             
-            // Add first item row
-            addItemRow();
-            updateAllCalculations();
+            // Add first item
+            addNewItem();
+            updateCalculations();
             
             // Initialize event listeners
             initEventListeners();
             
             // Initialize theme
             initTheme();
+            
+            // Focus on first input
+            setTimeout(() => {
+                document.getElementById('buyerName').focus();
+            }, 300);
         });
 
-        // Format number with PKR and commas
+        // Format PKR
         function formatPKR(amount) {
             return 'PKR ' + parseFloat(amount).toLocaleString('en-PK', {
                 minimumFractionDigits: 2,
@@ -938,74 +1269,283 @@
             return `${day}/${month}/${year}`;
         }
 
-        // Add a new item row
-        function addItemRow(description = '', quantity = '', rate = '') {
-            const tbody = document.getElementById('itemsBody');
-            const row = document.createElement('tr');
-            const rowId = Date.now() + Math.random();
+        // Show toast
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
             
-            row.innerHTML = `
-                <td><input type="text" class="item-desc" placeholder="Item description" value="${description}" autocomplete="off"></td>
-                <td><input type="number" class="item-qty" min="0" step="1" placeholder="0" value="${quantity}" autocomplete="off" inputmode="numeric"></td>
-                <td><input type="number" class="item-rate" min="0" step="any" placeholder="0.00" value="${rate}" autocomplete="off" inputmode="decimal"></td>
-                <td><input type="text" class="item-amount" readonly value="PKR 0.00"></td>
-                <td><button type="button" class="remove-btn" data-row="${rowId}" aria-label="Remove item">×</button></td>
-            `;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Show loading
+        function showLoading() {
+            document.getElementById('loading').classList.add('active');
+        }
+
+        // Hide loading
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        // Validate current step
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const buyerName = document.getElementById('buyerName').value.trim();
+                    const date = document.getElementById('invoiceDate').value;
+                    
+                    if (!buyerName) {
+                        document.getElementById('buyerName').classList.add('error');
+                        showToast('Please enter buyer name', 'error');
+                        return false;
+                    }
+                    
+                    if (!date) {
+                        document.getElementById('invoiceDate').classList.add('error');
+                        showToast('Please select date', 'error');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 2:
+                    if (items.length === 0) {
+                        showToast('Please add at least one item', 'error');
+                        return false;
+                    }
+                    
+                    // Check if all items have required fields
+                    for (let i = 0; i < items.length; i++) {
+                        if (!items[i].description || !items[i].quantity || !items[i].rate) {
+                            showToast('Please fill all item fields', 'error');
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                    
+                case 3:
+                    return true; // Summary is always valid
+                    
+                case 4:
+                    return true; // Preview is always valid
+            }
             
-            tbody.appendChild(row);
-            
-            // Add event listeners to new row
-            const descInput = row.querySelector('.item-desc');
-            const qtyInput = row.querySelector('.item-qty');
-            const rateInput = row.querySelector('.item-rate');
-            
-            const updateRow = () => {
-                const qty = parseFloat(qtyInput.value) || 0;
-                const rate = parseFloat(rateInput.value) || 0;
-                const amount = qty * rate;
-                row.querySelector('.item-amount').value = formatPKR(amount);
-                updateAllCalculations();
-            };
-            
-            descInput.addEventListener('input', updateRow);
-            qtyInput.addEventListener('input', updateRow);
-            rateInput.addEventListener('input', updateRow);
-            
-            row.querySelector('.remove-btn').addEventListener('click', function() {
-                if (document.querySelectorAll('#itemsBody tr').length > 1) {
-                    row.remove();
-                    updateAllCalculations();
-                    showToast('Item removed');
-                } else {
-                    showToast('At least one item is required');
+            return true;
+        }
+
+        // Update step indicator
+        function updateStepIndicator() {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                
+                if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                } else if (index + 1 < currentStep) {
+                    step.classList.add('completed');
                 }
             });
         }
 
-        // Update all calculations
-        function updateAllCalculations() {
-            const items = document.querySelectorAll('#itemsBody tr');
-            let totalQuantity = 0;
-            let subtotal = 0;
-            
-            // Calculate item amounts and totals
-            items.forEach(row => {
-                const qtyInput = row.querySelector('.item-qty');
-                const rateInput = row.querySelector('.item-rate');
-                
-                const qty = parseFloat(qtyInput.value) || 0;
-                const rate = parseFloat(rateInput.value) || 0;
-                const amount = qty * rate;
-                
-                totalQuantity += qty;
-                subtotal += amount;
+        // Show step
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.add('hidden');
             });
             
-            // Get buyer type and shipping
+            // Show current step
+            document.getElementById(`step${step}`).classList.remove('hidden');
+            
+            // Update buttons
+            updateButtons();
+        }
+
+        // Next step
+        function nextStep() {
+            if (!validateStep(currentStep)) return;
+            
+            if (currentStep < 4) {
+                currentStep++;
+                updateStepIndicator();
+                showStep(currentStep);
+                updateCalculations();
+            } else {
+                openExportModal();
+            }
+        }
+
+        // Previous step
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepIndicator();
+                showStep(currentStep);
+                updateCalculations();
+            }
+        }
+
+        // Update buttons
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentStep === 1;
+            
+            if (currentStep === 4) {
+                nextBtn.textContent = 'Export Invoice';
+                nextBtn.classList.add('success');
+            } else {
+                nextBtn.textContent = 'Next →';
+                nextBtn.classList.remove('success');
+            }
+        }
+
+        // Add new item
+        function addNewItem() {
+            const item = {
+                id: Date.now() + Math.random(),
+                description: '',
+                quantity: '',
+                rate: '',
+                amount: 0
+            };
+            
+            items.push(item);
+            renderItems();
+            updateCalculations();
+            showToast('Item added', 'success');
+        }
+
+        // Update item
+        function updateItem(id, field, value) {
+            const item = items.find(i => i.id === id);
+            if (item) {
+                item[field] = value;
+                
+                // Calculate amount if quantity or rate changes
+                if (field === 'quantity' || field === 'rate') {
+                    const qty = parseFloat(item.quantity) || 0;
+                    const rate = parseFloat(item.rate) || 0;
+                    item.amount = qty * rate;
+                }
+                
+                updateCalculations();
+            }
+        }
+
+        // Remove item
+        function removeItem(id) {
+            items = items.filter(item => item.id !== id);
+            renderItems();
+            updateCalculations();
+            showToast('Item removed', 'success');
+        }
+
+        // Clear all items
+        function clearAllItems() {
+            if (items.length > 0 && confirm('Remove all items?')) {
+                items = [];
+                addNewItem(); // Add one empty item
+                renderItems();
+                updateCalculations();
+                showToast('All items cleared', 'success');
+            }
+        }
+
+        // Render items
+        function renderItems() {
+            const itemsList = document.getElementById('itemsList');
+            const emptyItems = document.getElementById('emptyItems');
+            const itemsCount = document.getElementById('itemsCount');
+            
+            if (items.length === 0) {
+                itemsList.classList.add('hidden');
+                emptyItems.classList.remove('hidden');
+                itemsCount.textContent = '0';
+                return;
+            }
+            
+            itemsList.classList.remove('hidden');
+            emptyItems.classList.add('hidden');
+            itemsCount.textContent = items.length;
+            
+            itemsList.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const itemHTML = `
+                    <div class="item-card" data-id="${item.id}">
+                        <div class="item-card-header">
+                            <div class="item-index">${index + 1}</div>
+                            <button class="item-remove" onclick="removeItem(${item.id})" aria-label="Remove item">
+                                ×
+                            </button>
+                        </div>
+                        <div class="item-fields">
+                            <div class="item-field">
+                                <input type="text" 
+                                       value="${item.description}" 
+                                       placeholder="Item description"
+                                       oninput="updateItem(${item.id}, 'description', this.value)">
+                            </div>
+                            <div class="item-field-row">
+                                <div class="item-field">
+                                    <input type="number" 
+                                           value="${item.quantity}" 
+                                           placeholder="Qty"
+                                           min="0"
+                                           step="1"
+                                           oninput="updateItem(${item.id}, 'quantity', this.value)">
+                                </div>
+                                <div class="item-field">
+                                    <input type="number" 
+                                           value="${item.rate}" 
+                                           placeholder="Price"
+                                           min="0"
+                                           step="any"
+                                           oninput="updateItem(${item.id}, 'rate', this.value)">
+                                </div>
+                            </div>
+                            <div class="item-amount">
+                                ${formatPKR(item.amount)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                itemsList.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        }
+
+        // Update calculations
+        function updateCalculations() {
+            // Calculate totals
+            let totalQty = 0;
+            let subtotal = 0;
+            
+            items.forEach(item => {
+                const qty = parseFloat(item.quantity) || 0;
+                const rate = parseFloat(item.rate) || 0;
+                
+                totalQty += qty;
+                subtotal += qty * rate;
+            });
+            
+            // Get tax rate
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            document.getElementById('summaryTaxRate').textContent = taxRate;
+            
+            // Get buyer type
             const buyerType = document.getElementById('buyerType').value;
+            
+            // Get shipping
             let shipping = parseFloat(document.getElementById('shippingCost').value) || 0;
             
-            // Apply Pickup rules
+            // Apply pickup rules
             if (buyerType === 'pickup') {
                 shipping = 0;
                 document.getElementById('shippingCost').value = 0;
@@ -1014,179 +1554,101 @@
                 document.getElementById('shippingCost').readOnly = false;
             }
             
-            // Get tax rate from input
-            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
-            document.getElementById('taxPercent').textContent = taxRate;
-            
-            // Calculate tax based on buyer type
+            // Calculate tax
             let tax = 0;
             if (buyerType === 'cod' && taxRate > 0) {
                 tax = subtotal * (taxRate / 100);
             }
             
+            // Calculate grand total
             const grandTotal = subtotal + tax + shipping;
             
-            // Update summary display
-            document.getElementById('totalQuantity').textContent = `${totalQuantity} pcs`;
-            document.getElementById('subtotal').textContent = formatPKR(subtotal);
-            document.getElementById('taxAmount').textContent = formatPKR(tax);
-            document.getElementById('shippingDisplay').textContent = formatPKR(shipping);
-            document.getElementById('grandTotal').textContent = formatPKR(grandTotal);
+            // Update summary
+            document.getElementById('summaryQty').textContent = `${totalQty} pcs`;
+            document.getElementById('summarySubtotal').textContent = formatPKR(subtotal);
+            document.getElementById('summaryTax').textContent = formatPKR(tax);
+            document.getElementById('summaryShipping').textContent = formatPKR(shipping);
+            document.getElementById('summaryTotal').textContent = formatPKR(grandTotal);
             
             // Update preview
-            updatePreview(totalQuantity, subtotal, tax, shipping, grandTotal, taxRate);
+            updatePreview(subtotal, tax, shipping, grandTotal);
         }
 
-        // Update invoice preview
-        function updatePreview(totalQty, subtotal, tax, shipping, grandTotal, taxRate) {
-            // Update basic info
+        // Update preview
+        function updatePreview(subtotal, tax, shipping, grandTotal) {
+            // Update buyer info
             document.getElementById('previewBuyer').textContent = 
                 document.getElementById('buyerName').value || '[Buyer Name]';
+            
             document.getElementById('previewDate').textContent = 
-                document.getElementById('invoiceDate').value ? 
-                formatDate(document.getElementById('invoiceDate').value) : '[Date]';
+                `Date: ${document.getElementById('invoiceDate').value ? 
+                    formatDate(document.getElementById('invoiceDate').value) : '[Date]'}`;
             
-            // Update buyer type display
+            // Update buyer type
             const buyerType = document.getElementById('buyerType').value;
-            let buyerTypeDisplay = '';
+            let typeText = '';
             switch(buyerType) {
-                case 'pickup': buyerTypeDisplay = 'Pickup'; break;
-                case 'cod': buyerTypeDisplay = 'COD / Courier'; break;
-                case 'online': buyerTypeDisplay = 'Online Paid'; break;
+                case 'pickup': typeText = 'Pickup'; break;
+                case 'cod': typeText = 'COD / Courier'; break;
+                case 'online': typeText = 'Online Paid'; break;
             }
-            document.getElementById('previewBuyerType').textContent = buyerTypeDisplay;
+            document.getElementById('previewType').textContent = `Type: ${typeText}`;
             
-            // Update items table in preview
-            const previewTbody = document.querySelector('#previewTable tbody');
-            previewTbody.innerHTML = '';
+            // Update items table
+            const previewItems = document.getElementById('previewItems');
+            previewItems.innerHTML = '';
             
-            const items = document.querySelectorAll('#itemsBody tr');
-            items.forEach(row => {
-                const desc = row.querySelector('.item-desc').value || '';
-                const qty = row.querySelector('.item-qty').value || '0';
-                const rate = parseFloat(row.querySelector('.item-rate').value) || 0;
-                const amount = parseFloat(qty) * rate;
-                
-                if (desc || qty !== '0' || rate > 0) {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td>${desc}</td>
-                        <td>${qty}</td>
-                        <td>${formatPKR(rate)}</td>
-                        <td>${formatPKR(amount)}</td>
+            items.forEach(item => {
+                if (item.description || item.quantity || item.rate) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.description || ''}</td>
+                        <td>${item.quantity || '0'}</td>
+                        <td>${formatPKR(item.rate || 0)}</td>
+                        <td>${formatPKR(item.amount || 0)}</td>
                     `;
-                    previewTbody.appendChild(newRow);
+                    previewItems.appendChild(row);
                 }
             });
             
-            // Update totals in preview
-            document.getElementById('previewTotalQty').textContent = `${totalQty} pcs`;
+            // Update totals
             document.getElementById('previewSubtotal').textContent = formatPKR(subtotal);
             document.getElementById('previewTax').textContent = formatPKR(tax);
             document.getElementById('previewShipping').textContent = formatPKR(shipping);
-            document.getElementById('previewGrandTotal').textContent = formatPKR(grandTotal);
+            document.getElementById('previewTotal').textContent = formatPKR(grandTotal);
         }
 
-        // Validate form
-        function validateForm() {
-            const buyerName = document.getElementById('buyerName').value.trim();
-            const date = document.getElementById('invoiceDate').value;
-            const items = document.querySelectorAll('#itemsBody tr');
-            
-            let hasValidItem = false;
-            items.forEach(row => {
-                const desc = row.querySelector('.item-desc').value.trim();
-                const qty = row.querySelector('.item-qty').value;
-                const rate = row.querySelector('.item-rate').value;
-                
-                if (desc && qty && parseFloat(qty) > 0 && rate && parseFloat(rate) > 0) {
-                    hasValidItem = true;
-                }
-            });
-            
-            if (!buyerName) {
-                showToast('Please enter buyer name');
-                switchTab('details');
-                return false;
-            }
-            
-            if (!date) {
-                showToast('Please select date');
-                switchTab('details');
-                return false;
-            }
-            
-            if (!hasValidItem) {
-                showToast('Please add at least one valid item');
-                switchTab('items');
-                return false;
-            }
-            
-            return true;
+        // Open export modal
+        function openExportModal() {
+            document.getElementById('exportModal').classList.add('active');
         }
 
-        // Switch tabs
-        function switchTab(tabName) {
-            currentTab = tabName;
-            
-            // Update tab buttons
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.dataset.tab === tabName) {
-                    tab.classList.add('active');
-                }
-            });
-            
-            // Update tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-                if (content.id === tabName + 'Tab') {
-                    content.classList.add('active');
-                }
-            });
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
+        // Close export modal
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.remove('active');
         }
 
-        // Show action sheet
-        function showActionSheet() {
-            if (!validateForm()) return;
-            
-            document.getElementById('overlay').classList.add('show');
-            document.getElementById('actionSheet').classList.add('show');
+        // Open help modal
+        function openHelpModal() {
+            document.getElementById('helpModal').classList.add('active');
         }
 
-        // Hide action sheet
-        function hideActionSheet() {
-            document.getElementById('overlay').classList.remove('show');
-            document.getElementById('actionSheet').classList.remove('show');
-        }
-
-        // Show toast message
-        function showToast(message, duration = 3000) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
+        // Close help modal
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.remove('active');
         }
 
         // Export as JPG
         async function exportAsJPG() {
-            const exportBtn = document.getElementById('exportBtn');
-            const originalHTML = exportBtn.innerHTML;
-            exportBtn.innerHTML = '<span class="spinner"></span>';
+            showLoading();
             
             try {
-                const invoiceElement = document.getElementById('invoicePreview');
+                const preview = document.getElementById('invoicePreview');
                 
-                const canvas = await html2canvas(invoiceElement, {
+                const canvas = await html2canvas(preview, {
                     scale: 2,
                     useCORS: true,
-                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff'
+                    backgroundColor: '#ffffff'
                 });
                 
                 const link = document.createElement('a');
@@ -1196,27 +1658,26 @@
                 link.href = canvas.toDataURL('image/jpeg', 0.9);
                 link.click();
                 
-                showToast('JPG downloaded successfully');
+                showToast('Invoice saved as JPG', 'success');
             } catch (error) {
-                showToast('Error generating JPG: ' + error.message);
+                showToast('Error saving JPG: ' + error.message, 'error');
             } finally {
-                exportBtn.innerHTML = originalHTML;
+                hideLoading();
+                closeExportModal();
             }
         }
 
         // Export as PDF
         async function exportAsPDF() {
-            const exportBtn = document.getElementById('exportBtn');
-            const originalHTML = exportBtn.innerHTML;
-            exportBtn.innerHTML = '<span class="spinner"></span>';
+            showLoading();
             
             try {
-                const invoiceElement = document.getElementById('invoicePreview');
+                const preview = document.getElementById('invoicePreview');
                 
-                const canvas = await html2canvas(invoiceElement, {
+                const canvas = await html2canvas(preview, {
                     scale: 2,
                     useCORS: true,
-                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff'
+                    backgroundColor: '#ffffff'
                 });
                 
                 const imgData = canvas.toDataURL('image/jpeg', 0.9);
@@ -1235,31 +1696,54 @@
                 const date = document.getElementById('invoiceDate').value;
                 pdf.save(`Invoice_${buyerName}_${date}.pdf`);
                 
-                showToast('PDF downloaded successfully');
+                showToast('Invoice saved as PDF', 'success');
             } catch (error) {
-                showToast('Error generating PDF: ' + error.message);
+                showToast('Error saving PDF: ' + error.message, 'error');
             } finally {
-                exportBtn.innerHTML = originalHTML;
+                hideLoading();
+                closeExportModal();
             }
         }
 
-        // Show share instructions
-        function showShareInstructions() {
-            const message = `How to share invoice from iPhone:\n\n1. Download as JPG or PDF first\n2. Open Files app\n3. Find downloaded invoice in "Downloads" or "On My iPhone"\n4. Tap and hold the file\n5. Select "Share"\n6. Choose AirDrop, WhatsApp, Email, or any other app\n\nFor quick AirDrop to Mac:\n1. Make sure both devices have AirDrop on\n2. Tap Share in Files app\n3. Select your Mac from AirDrop list`;
+        // Print invoice
+        function printInvoice() {
+            if (validateStep(4)) {
+                window.print();
+                closeExportModal();
+            }
+        }
+
+        // Share invoice
+        async function shareInvoice() {
+            const buyerName = document.getElementById('buyerName').value;
+            const date = document.getElementById('invoiceDate').value;
+            const total = document.getElementById('summaryTotal').textContent;
+            
+            const text = `Invoice from ZM Mahal\nBuyer: ${buyerName}\nDate: ${date}\nTotal: ${total}\n\nGenerated using ZM Mahal Invoice App`;
             
             if (navigator.share) {
-                navigator.share({
-                    title: 'How to Share Invoice',
-                    text: message
-                });
+                try {
+                    await navigator.share({
+                        title: 'Invoice from ZM Mahal',
+                        text: text,
+                        url: window.location.href
+                    });
+                    showToast('Invoice shared successfully', 'success');
+                } catch (error) {
+                    console.log('Share cancelled:', error);
+                }
             } else {
-                alert(message);
+                // Fallback: Copy to clipboard
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Invoice text copied to clipboard', 'success');
+                });
             }
+            
+            closeExportModal();
         }
 
         // Initialize theme
         function initTheme() {
-            // Check for saved theme or prefer-color-scheme
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
@@ -1268,7 +1752,7 @@
             }
         }
 
-        // Toggle dark mode
+        // Toggle theme
         function toggleTheme() {
             if (isDarkMode) {
                 disableDarkMode();
@@ -1293,60 +1777,50 @@
 
         // Initialize event listeners
         function initEventListeners() {
-            // Tab navigation
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    switchTab(tab.dataset.tab);
-                });
+            // Navigation buttons
+            document.getElementById('prevBtn').addEventListener('click', prevStep);
+            document.getElementById('nextBtn').addEventListener('click', nextStep);
+            
+            // Add item button
+            document.getElementById('addItemBtn').addEventListener('click', addNewItem);
+            document.getElementById('addFirstItem').addEventListener('click', addNewItem);
+            
+            // Clear items button
+            document.getElementById('clearItemsBtn').addEventListener('click', clearAllItems);
+            
+            // Input changes
+            document.getElementById('buyerName').addEventListener('input', function() {
+                this.classList.remove('error');
+                updateCalculations();
             });
+            
+            document.getElementById('invoiceDate').addEventListener('change', function() {
+                this.classList.remove('error');
+                updateCalculations();
+            });
+            
+            document.getElementById('buyerType').addEventListener('change', updateCalculations);
+            document.getElementById('taxRate').addEventListener('input', updateCalculations);
+            document.getElementById('shippingCost').addEventListener('input', updateCalculations);
             
             // Theme toggle
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             
-            // Add item button
-            document.getElementById('addItemBtn').addEventListener('click', () => {
-                addItemRow();
-                switchTab('items');
-                showToast('Item added');
-            });
+            // Help button
+            document.getElementById('helpBtn').addEventListener('click', openHelpModal);
             
-            // Export button
-            document.getElementById('exportBtn').addEventListener('click', showActionSheet);
+            // Modal close buttons
+            document.getElementById('closeExport').addEventListener('click', closeExportModal);
+            document.getElementById('closeHelp').addEventListener('click', closeHelpModal);
             
-            // Clear all button
-            document.getElementById('clearAllMobile').addEventListener('click', () => {
-                if (confirm('Remove all items?')) {
-                    const tbody = document.getElementById('itemsBody');
-                    while (tbody.firstChild) {
-                        tbody.removeChild(tbody.firstChild);
-                    }
-                    addItemRow(); // Add one empty row
-                    updateAllCalculations();
-                    showToast('All items cleared');
-                }
-            });
-            
-            // Input changes
-            document.getElementById('buyerName').addEventListener('input', updateAllCalculations);
-            document.getElementById('invoiceDate').addEventListener('change', updateAllCalculations);
-            document.getElementById('buyerType').addEventListener('change', updateAllCalculations);
-            document.getElementById('shippingCost').addEventListener('input', updateAllCalculations);
-            document.getElementById('taxRate').addEventListener('input', updateAllCalculations);
-            
-            // Action sheet
-            document.getElementById('overlay').addEventListener('click', hideActionSheet);
-            document.getElementById('cancelAction').addEventListener('click', hideActionSheet);
-            
-            document.querySelectorAll('.action-sheet-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const action = this.dataset.action;
-                    hideActionSheet();
+            // Export options
+            document.querySelectorAll('[data-format]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const format = this.dataset.format;
                     
-                    switch(action) {
+                    switch(format) {
                         case 'print':
-                            if (validateForm()) {
-                                window.print();
-                            }
+                            printInvoice();
                             break;
                         case 'jpg':
                             exportAsJPG();
@@ -1355,33 +1829,79 @@
                             exportAsPDF();
                             break;
                         case 'share':
-                            showShareInstructions();
+                            shareInvoice();
                             break;
                     }
                 });
             });
             
-            // Prevent form submission on Enter
+            // Close modals on overlay click
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                // Next step on Enter
+                if (e.key === 'Enter' && !e.target.matches('textarea, [contenteditable]')) {
                     e.preventDefault();
+                    nextStep();
+                }
+                
+                // Previous step on Escape (except in modals)
+                if (e.key === 'Escape' && !document.querySelector('.modal-overlay.active')) {
+                    e.preventDefault();
+                    prevStep();
                 }
             });
             
-            // Handle iOS keyboard closing
+            // Touch gestures for mobile
+            let touchStartX = 0;
+            let touchStartY = 0;
+            
             document.addEventListener('touchstart', function(e) {
-                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'SELECT') {
-                    document.activeElement.blur();
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                const touchEndX = e.changedTouches[0].screenX;
+                const touchEndY = e.changedTouches[0].screenY;
+                const diffX = touchStartX - touchEndX;
+                const diffY = touchStartY - touchEndY;
+                
+                // Swipe left to go next
+                if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50) {
+                    nextStep();
+                }
+                
+                // Swipe right to go previous
+                if (Math.abs(diffX) > Math.abs(diffY) && diffX < -50) {
+                    prevStep();
+                }
+            });
+            
+            // iOS keyboard fixes
+            document.addEventListener('focusin', function(e) {
+                if (e.target.matches('input, textarea, select')) {
+                    // Scroll input into view
+                    setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
                 }
             });
         }
 
-        // Prevent iOS zoom on input focus
+        // iOS input focus fix
         document.addEventListener('touchstart', function(e) {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-                e.preventDefault();
+            if (e.target.matches('input, textarea, select')) {
+                e.target.focus();
             }
-        }, { passive: false });
+        }, { passive: true });
     </script>
 </body>
 </html>
