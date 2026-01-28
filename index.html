@@ -5,74 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ZM Invoice">
+    <meta name="apple-mobile-web-app-title" content="ZM Invoice Pro">
     <meta name="format-detection" content="telephone=no">
-    <title>ZM Mahal Invoice</title>
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+    <title>ZM Invoice Pro | Professional Invoice SaaS</title>
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
     <style>
-        /* CSS Reset and Base */
+        /* ===== CSS Variables ===== */
         :root {
             /* Light Theme */
-            --primary-bg: #ffffff;
-            --secondary-bg: #f8f9fa;
-            --tertiary-bg: #f1f3f4;
-            --primary-text: #000000;
-            --secondary-text: #5f6368;
-            --accent-color: #1a73e8;
-            --success-color: #34a853;
-            --warning-color: #fbbc04;
-            --error-color: #ea4335;
-            --border-color: #dadce0;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-            --shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --surface-2: #f1f5f9;
+            --border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --safe-top: env(safe-area-inset-top, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
-            --safe-left: env(safe-area-inset-left, 0px);
-            --safe-right: env(safe-area-inset-right, 0px);
         }
 
         [data-theme="dark"] {
-            /* Dark Theme */
-            --primary-bg: #121212;
-            --secondary-bg: #1e1e1e;
-            --tertiary-bg: #2d2d2d;
-            --primary-text: #ffffff;
-            --secondary-text: #b0b0b0;
-            --accent-color: #8ab4f8;
-            --success-color: #81c995;
-            --warning-color: #fdd663;
-            --error-color: #f28b82;
-            --border-color: #3c4043;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
-            --shadow-lg: 0 8px 16px rgba(0,0,0,0.5);
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary-color: #94a3b8;
+            --success-color: #34d399;
+            --warning-color: #fbbf24;
+            --danger-color: #f87171;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #334155;
+            --border: #475569;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
         }
 
+        /* ===== Reset & Base ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
         }
 
         html, body {
             width: 100%;
             height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             overflow: hidden;
             position: fixed;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: var(--primary-bg);
-            color: var(--primary-text);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-x-smoothing: grayscale;
         }
 
-        /* App Container */
+        input, textarea, select, button {
+            font-size: 16px !important;
+            font-family: inherit;
+            border: none;
+            background: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* ===== App Container ===== */
         #app {
             width: 100%;
             height: 100vh;
@@ -83,117 +102,236 @@
             padding-top: var(--safe-top);
         }
 
-        /* Header */
+        /* ===== Header ===== */
         .app-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-            background: var(--primary-bg);
+            padding: 16px 20px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .app-title h1 {
-            font-size: 22px;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--primary-text);
-            margin-bottom: 2px;
         }
 
-        .app-subtitle {
-            font-size: 14px;
-            color: var(--secondary-text);
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .logo-text .tagline {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
 
         .theme-toggle {
             width: 44px;
             height: 44px;
-            border-radius: 22px;
-            border: 1px solid var(--border-color);
-            background: var(--secondary-bg);
+            border-radius: 12px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             font-size: 20px;
-            color: var(--primary-text);
+            color: var(--text-primary);
+            transition: var(--transition);
         }
 
-        /* Progress Steps */
+        .theme-toggle:hover {
+            background: var(--border);
+        }
+
+        /* ===== Progress Steps ===== */
+        .progress-container {
+            padding: 16px 20px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 73px;
+            z-index: 900;
+        }
+
+        .progress-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
         .progress-steps {
-            padding: 16px;
             display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--secondary-bg);
-            border-bottom: 1px solid var(--border-color);
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 14px;
+            left: 0;
+            height: 3px;
+            background: var(--primary-color);
+            z-index: 2;
+            transition: var(--transition);
         }
 
         .step {
-            flex: 1;
-            height: 4px;
-            background: var(--border-color);
-            border-radius: 2px;
-            transition: all 0.3s ease;
+            position: relative;
+            z-index: 3;
+            text-align: center;
         }
 
-        .step.active {
-            background: var(--accent-color);
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--surface-2);
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-tertiary);
+            transition: var(--transition);
+            margin: 0 auto 8px;
         }
 
-        .step.completed {
+        .step.active .step-circle {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .step.completed .step-circle {
             background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
         }
 
-        /* Main Content */
+        .step-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+        }
+
+        .step.active .step-label {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* ===== Main Content ===== */
         .main-content {
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding: 16px;
-            padding-bottom: calc(16px + var(--safe-bottom) + 80px);
+            padding: 20px;
+            padding-bottom: calc(20px + var(--safe-bottom) + 80px);
         }
 
-        /* Form Sections */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===== Form Sections ===== */
         .form-section {
-            background: var(--secondary-bg);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
         }
 
         .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--primary-text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 20px;
-            background: var(--accent-color);
-            border-radius: 2px;
+        .section-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
         }
 
-        /* Input Groups */
-        .input-grid {
+        /* ===== Form Inputs ===== */
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 20px;
         }
 
         .input-group {
@@ -203,299 +341,323 @@
         .input-label {
             display: block;
             font-size: 14px;
-            font-weight: 500;
-            color: var(--primary-text);
+            font-weight: 600;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
         .input-field {
             width: 100%;
             padding: 16px;
-            font-size: 16px !important;
-            border: 2px solid var(--border-color);
-            background: var(--primary-bg);
-            color: var(--primary-text);
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
+            font-size: 16px;
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            transition: var(--transition);
         }
 
         .input-field:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .input-field[readonly] {
-            background: var(--tertiary-bg);
+            background: var(--surface-2);
             opacity: 0.7;
         }
 
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 16px;
         }
 
-        /* Items Section */
+        /* ===== Items Section ===== */
         .items-section {
-            background: var(--secondary-bg);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
         }
 
         .items-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .items-count {
             font-size: 14px;
-            color: var(--secondary-text);
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .items-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
         }
 
         .item-card {
-            background: var(--primary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            position: relative;
+            background: var(--surface-2);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .item-card:hover {
+            border-color: var(--primary-color);
         }
 
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .item-number {
-            width: 28px;
-            height: 28px;
-            background: var(--tertiary-bg);
-            border-radius: 14px;
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            color: white;
             font-weight: 600;
-            color: var(--secondary-text);
+            font-size: 14px;
         }
 
         .item-delete {
-            width: 32px;
-            height: 32px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            background: var(--primary-bg);
-            color: var(--error-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background: var(--background);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .item-delete:hover {
+            background: var(--danger-color);
+            color: white;
         }
 
         .item-fields {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 16px;
         }
 
         .item-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 16px;
         }
 
         .item-input {
             width: 100%;
-            padding: 12px;
-            font-size: 16px !important;
-            border: 1px solid var(--border-color);
-            background: var(--tertiary-bg);
-            color: var(--primary-text);
+            padding: 14px;
+            background: var(--background);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .item-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
         .item-amount {
-            padding: 12px;
-            background: var(--tertiary-bg);
-            border: 1px solid var(--border-color);
+            padding: 14px;
+            background: var(--background);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             font-size: 16px;
             font-weight: 600;
-            color: var(--primary-text);
+            color: var(--text-primary);
             text-align: right;
         }
 
-        /* Summary Section */
-        .summary-card {
-            background: var(--secondary-bg);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
+        /* ===== Summary Section ===== */
+        .summary-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .summary-row:last-child {
-            border-bottom: none;
-        }
-
-        .summary-row.total {
-            background: var(--tertiary-bg);
-            border-radius: var(--radius-sm);
             padding: 16px;
-            margin-top: 8px;
-            border: 2px solid var(--accent-color);
+            background: var(--surface-2);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
         }
 
         .summary-label {
             font-size: 16px;
-            color: var(--primary-text);
+            color: var(--text-primary);
         }
 
         .summary-value {
             font-size: 16px;
             font-weight: 600;
-            color: var(--primary-text);
+            color: var(--text-primary);
+        }
+
+        .summary-row.total {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .summary-row.total .summary-label,
+        .summary-row.total .summary-value {
+            color: white;
+            font-weight: 700;
         }
 
         .summary-row.total .summary-label {
             font-size: 18px;
-            font-weight: 700;
         }
 
         .summary-row.total .summary-value {
             font-size: 20px;
-            font-weight: 800;
         }
 
-        /* Preview Section */
+        /* ===== Preview Section ===== */
         .preview-section {
             background: white;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             padding: 0;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
             overflow: hidden;
+            box-shadow: var(--shadow-lg);
         }
 
         .preview-container {
             width: 210mm;
             min-height: 297mm;
             background: white;
-            color: black;
+            color: #111827;
             margin: 0 auto;
         }
 
         .preview-header {
-            background: #000000;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: white;
-            padding: 30px;
+            padding: 40px;
             text-align: center;
         }
 
-        .preview-header h2 {
-            font-size: 28px;
+        .preview-logo {
+            font-size: 32px;
             font-weight: 800;
             margin-bottom: 8px;
             letter-spacing: 2px;
         }
 
-        .preview-header p {
+        .preview-subtitle {
             font-size: 14px;
             opacity: 0.9;
+            font-weight: 500;
         }
 
         .preview-content {
-            padding: 30px;
+            padding: 40px;
         }
 
         .preview-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid #000000;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 3px solid #1e293b;
         }
 
         .preview-from h3,
         .preview-to h3 {
             font-size: 16px;
             font-weight: 700;
-            margin-bottom: 12px;
-            color: #000000;
+            margin-bottom: 16px;
+            color: #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .preview-from p,
+        .preview-to p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
         }
 
         .preview-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 30px 0;
+            margin: 40px 0;
         }
 
         .preview-table th {
-            background: #f8f9fa;
-            padding: 12px;
+            background: #f8fafc;
+            padding: 16px;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-            border-bottom: 2px solid #000000;
+            border-bottom: 2px solid #1e293b;
+            color: #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .preview-table td {
-            padding: 12px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
             font-size: 14px;
         }
 
         .preview-table tfoot td {
             font-weight: 600;
             border-bottom: none;
-        }
-
-        .preview-totals {
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-        }
-
-        .preview-total-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .preview-total-row:last-child {
-            border-bottom: none;
-            font-weight: 700;
-            font-size: 18px;
-            padding-top: 12px;
+            padding-top: 20px;
         }
 
         .preview-footer {
             text-align: center;
-            padding: 30px;
-            border-top: 1px solid #000000;
-            margin-top: 30px;
+            padding: 40px;
+            border-top: 2px solid #1e293b;
+            margin-top: 40px;
+        }
+
+        .preview-footer p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
         }
 
         .preview-signature {
@@ -504,218 +666,341 @@
         }
 
         .signature-line {
-            border-top: 2px solid #000000;
-            width: 250px;
-            margin: 4px 0;
+            border-top: 2px solid #1e293b;
+            width: 300px;
+            margin: 8px 0;
             display: inline-block;
         }
 
-        /* Bottom Navigation */
-        .bottom-nav {
+        /* ===== Navigation Buttons ===== */
+        .nav-buttons {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--primary-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 12px 16px calc(12px + var(--safe-bottom));
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 16px 20px calc(16px + var(--safe-bottom));
             display: flex;
-            gap: 12px;
+            gap: 16px;
             z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-buttons-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            gap: 16px;
         }
 
         .nav-btn {
             flex: 1;
-            height: 52px;
-            border: none;
+            height: 56px;
             border-radius: var(--radius-md);
             font-size: 17px;
             font-weight: 600;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn:active {
-            transform: scale(0.98);
-        }
-
-        .nav-btn-primary {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .nav-btn-primary:active {
-            background: #0d62d9;
+            transition: var(--transition);
         }
 
         .nav-btn-secondary {
-            background: var(--secondary-bg);
-            color: var(--primary-text);
-            border: 2px solid var(--border-color);
+            background: var(--surface-2);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
         }
 
-        .nav-btn-secondary:active {
-            background: var(--tertiary-bg);
+        .nav-btn-secondary:hover {
+            background: var(--border);
         }
 
-        /* Action Sheet */
-        .action-sheet {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            right: 0;
-            background: var(--primary-bg);
-            border-radius: 20px 20px 0 0;
-            z-index: 2000;
-            transition: bottom 0.3s ease;
-            padding-bottom: var(--safe-bottom);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+        .nav-btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
-        .action-sheet.show {
-            bottom: 0;
+        .nav-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
         }
 
-        .action-sheet-header {
-            padding: 24px 24px 16px;
-            border-bottom: 1px solid var(--border-color);
-            text-align: center;
-            font-weight: 600;
-            font-size: 18px;
-            color: var(--primary-text);
+        .nav-btn-export {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
-        .action-sheet-content {
-            padding: 16px 24px;
+        .nav-btn-export:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
         }
 
-        .action-option {
-            padding: 18px;
-            border: 2px solid var(--border-color);
-            background: var(--secondary-bg);
-            color: var(--primary-text);
-            border-radius: var(--radius-md);
-            font-size: 17px;
-            text-align: center;
-            margin-bottom: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .action-option:active {
-            background: var(--tertiary-bg);
-        }
-
-        .action-cancel {
-            padding: 18px;
-            background: var(--secondary-bg);
-            color: var(--primary-text);
-            border-radius: var(--radius-md);
-            font-size: 17px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-        }
-
-        /* Overlay */
-        .overlay {
+        /* ===== Export Modal ===== */
+        .export-modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1500;
+            background: rgba(0,0,0,0.8);
             display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        .overlay.show {
-            display: block;
+        .export-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
         }
 
-        /* Toast */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .export-content {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .export-header {
+            padding: 32px 32px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .export-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .export-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .export-options {
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .export-option {
+            background: var(--surface-2);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .export-option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .export-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .export-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .export-desc {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .export-footer {
+            padding: 24px 32px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 16px;
+        }
+
+        .export-cancel {
+            flex: 1;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--surface-2);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .export-cancel:hover {
+            background: var(--border);
+        }
+
+        /* ===== Toast ===== */
         .toast {
             position: fixed;
-            top: 100px;
+            top: 120px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--primary-bg);
-            border: 2px solid var(--border-color);
+            background: var(--surface);
+            border: 1px solid var(--border);
             padding: 16px 24px;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             z-index: 3000;
             display: none;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-xl);
             max-width: 90%;
             text-align: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .toast.show {
             display: block;
-            animation: slideDown 0.3s ease;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
+                transform: translateX(-50%) translateY(-30px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateX(-50%) translateY(0);
+                transform: translateX(-50%) translateY(0) scale(1);
             }
         }
 
-        /* Loading */
+        /* ===== Loading ===== */
         .loading {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.9);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 4000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .loading.show {
             display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .loading-content {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top-color: white;
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Mobile Optimizations */
+        .loading-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .preview-container {
                 width: 100%;
                 min-height: auto;
-                transform: scale(0.85);
+                transform: scale(0.9);
                 transform-origin: top center;
+            }
+            
+            .export-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .item-row {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Print Styles */
+        /* ===== Print Styles ===== */
         @media print {
             body * {
                 visibility: hidden;
@@ -740,10 +1025,9 @@
             }
             
             .app-header,
-            .progress-steps,
-            .bottom-nav,
-            .overlay,
-            .action-sheet,
+            .progress-container,
+            .nav-buttons,
+            .export-modal,
             .toast,
             .loading {
                 display: none !important;
@@ -754,53 +1038,6 @@
                 margin: 0;
             }
         }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mb-1 { margin-bottom: 4px; }
-        .mb-2 { margin-bottom: 8px; }
-        .mb-3 { margin-bottom: 12px; }
-        .mb-4 { margin-bottom: 16px; }
-        .mb-5 { margin-bottom: 20px; }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .empty-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.3;
-        }
-
-        .empty-text {
-            font-size: 16px;
-            color: var(--secondary-text);
-            margin-bottom: 20px;
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--secondary-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
     </style>
 </head>
 <body>
@@ -808,49 +1045,77 @@
         <!-- Header -->
         <header class="app-header">
             <div class="header-content">
-                <div class="app-title">
-                    <h1>ZM Mahal Invoice</h1>
-                    <div class="app-subtitle">Professional Invoice Generator</div>
+                <div class="logo-container">
+                    <div class="logo-icon">Z</div>
+                    <div class="logo-text">
+                        <h1>ZM Invoice Pro</h1>
+                        <div class="tagline">Professional Invoice SaaS</div>
+                    </div>
                 </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    🌓
-                </button>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        🌓
+                    </button>
+                </div>
             </div>
         </header>
 
         <!-- Progress Steps -->
-        <div class="progress-steps">
-            <div class="step active" data-step="1"></div>
-            <div class="step" data-step="2"></div>
-            <div class="step" data-step="3"></div>
-            <div class="step" data-step="4"></div>
+        <div class="progress-container">
+            <div class="progress-content">
+                <div class="progress-steps">
+                    <div class="progress-line" id="progressLine"></div>
+                    <div class="step active" data-step="1">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Details</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Items</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Summary</div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Preview</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Step 1: Details -->
-            <section class="form-section" id="step1">
-                <h2 class="section-title">Invoice Details</h2>
-                <div class="input-grid">
-                    <div class="input-group">
-                        <label class="input-label" for="sellerName">Seller Name</label>
-                        <input type="text" id="sellerName" class="input-field" value="ZM Mahal" readonly>
+            <div class="content-wrapper">
+                <!-- Step 1: Details -->
+                <section class="form-section" id="step1">
+                    <div class="section-header">
+                        <div class="section-icon">📝</div>
+                        <div>
+                            <div class="section-title">Invoice Details</div>
+                            <div class="section-description">Enter basic information about the invoice</div>
+                        </div>
                     </div>
-                    
-                    <div class="input-group">
-                        <label class="input-label" for="buyerName">Buyer Name *</label>
-                        <input type="text" id="buyerName" class="input-field" placeholder="Enter buyer name" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="input-label" for="invoiceDate">Date *</label>
-                        <input type="date" id="invoiceDate" class="input-field" required>
-                    </div>
-                    
-                    <div class="input-row">
+                    <div class="form-grid">
                         <div class="input-group">
-                            <label class="input-label" for="buyerType">Buyer Type</label>
-                            <div class="select-wrapper">
+                            <label class="input-label" for="sellerName">Seller Name</label>
+                            <input type="text" id="sellerName" class="input-field" value="ZM Mahal" readonly>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label" for="buyerName">Buyer Name *</label>
+                            <input type="text" id="buyerName" class="input-field" placeholder="Enter buyer name" required>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label class="input-label" for="invoiceDate">Date *</label>
+                                <input type="date" id="invoiceDate" class="input-field" required>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label" for="buyerType">Buyer Type</label>
                                 <select id="buyerType" class="input-field">
                                     <option value="pickup">Pickup</option>
                                     <option value="cod">COD / Courier</option>
@@ -859,166 +1124,195 @@
                             </div>
                         </div>
                         
-                        <div class="input-group">
-                            <label class="input-label" for="taxRate">Tax Rate (%)</label>
-                            <input type="number" id="taxRate" class="input-field" min="0" max="100" step="0.1" value="5">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label class="input-label" for="taxRate">Tax Rate (%)</label>
+                                <input type="number" id="taxRate" class="input-field" min="0" max="100" step="0.1" value="5">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label" for="shippingCost">Shipping Cost (PKR)</label>
+                                <input type="number" id="shippingCost" class="input-field" min="0" value="0" step="any">
+                            </div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Step 2: Items -->
+                <section class="items-section hidden" id="step2">
+                    <div class="section-header">
+                        <div class="section-icon">📦</div>
+                        <div>
+                            <div class="section-title">Invoice Items</div>
+                            <div class="section-description">Add products or services to your invoice</div>
+                        </div>
+                    </div>
+                    <div class="items-header">
+                        <div class="items-count">Total Items: <span id="itemsCount">1</span></div>
+                        <button class="nav-btn-secondary" id="addItemBtn" style="padding: 12px 24px;">
+                            + Add Item
+                        </button>
                     </div>
                     
-                    <div class="input-group">
-                        <label class="input-label" for="shippingCost">Shipping Cost (PKR)</label>
-                        <input type="number" id="shippingCost" class="input-field" min="0" value="0" step="any">
-                    </div>
-                </div>
-            </section>
-
-            <!-- Step 2: Items -->
-            <section class="items-section hidden" id="step2">
-                <div class="section-title">Invoice Items</div>
-                <div class="items-header">
-                    <div class="items-count">Total Items: <span id="itemsCount">1</span></div>
-                    <button class="nav-btn-secondary" id="addItemBtn" style="padding: 8px 16px; font-size: 14px;">
-                        + Add Item
-                    </button>
-                </div>
-                
-                <div class="items-list" id="itemsList">
-                    <!-- Items will be added here -->
-                </div>
-                
-                <div class="empty-state hidden" id="emptyItems">
-                    <div class="empty-icon">📦</div>
-                    <div class="empty-text">No items added yet</div>
-                    <button class="nav-btn-secondary" id="addFirstItem" style="padding: 12px 24px;">
-                        Add Your First Item
-                    </button>
-                </div>
-            </section>
-
-            <!-- Step 3: Summary -->
-            <section class="summary-card hidden" id="step3">
-                <h2 class="section-title">Invoice Summary</h2>
-                <div class="summary-row">
-                    <span class="summary-label">Total Quantity</span>
-                    <span class="summary-value" id="totalQuantity">0 pcs</span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Subtotal</span>
-                    <span class="summary-value" id="subtotal">PKR 0.00</span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Tax (<span id="taxPercent">5</span>%)</span>
-                    <span class="summary-value" id="taxAmount">PKR 0.00</span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Shipping</span>
-                    <span class="summary-value" id="shippingAmount">PKR 0.00</span>
-                </div>
-                <div class="summary-row total">
-                    <span class="summary-label">Grand Total</span>
-                    <span class="summary-value" id="grandTotal">PKR 0.00</span>
-                </div>
-            </section>
-
-            <!-- Step 4: Preview -->
-            <section class="preview-section hidden" id="step4">
-                <div class="preview-container">
-                    <div class="preview-header">
-                        <h2>INVOICE</h2>
-                        <p>ZM Mahal - Professional Clothing Business</p>
+                    <div class="items-list" id="itemsList">
+                        <!-- Items will be added here -->
                     </div>
                     
-                    <div class="preview-content">
-                        <div class="preview-info">
-                            <div class="preview-from">
-                                <h3>From</h3>
-                                <p><strong>ZM Mahal</strong><br>
-                                Clothing Store<br>
-                                Contact: 0300-1234567</p>
-                            </div>
-                            <div class="preview-to">
-                                <h3>To</h3>
-                                <p id="previewBuyer">[Buyer Name]</p>
-                                <p id="previewDate">Date: [Date]</p>
-                                <p id="previewType">Type: [Type]</p>
-                            </div>
+                    <div class="empty-state hidden" id="emptyItems">
+                        <div class="empty-icon">📦</div>
+                        <div class="empty-text">No items added yet. Add your first item to continue.</div>
+                        <button class="nav-btn-primary" id="addFirstItem" style="padding: 16px 32px;">
+                            + Add First Item
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Step 3: Summary -->
+                <section class="summary-section hidden" id="step3">
+                    <div class="section-header">
+                        <div class="section-icon">💰</div>
+                        <div>
+                            <div class="section-title">Invoice Summary</div>
+                            <div class="section-description">Review the total amounts before finalizing</div>
+                        </div>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-row">
+                            <span class="summary-label">Total Quantity</span>
+                            <span class="summary-value" id="totalQuantity">0 pcs</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Subtotal</span>
+                            <span class="summary-value" id="subtotal">PKR 0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Tax (<span id="taxPercent">5</span>%)</span>
+                            <span class="summary-value" id="taxAmount">PKR 0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Shipping</span>
+                            <span class="summary-value" id="shippingAmount">PKR 0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span class="summary-label">Grand Total</span>
+                            <span class="summary-value" id="grandTotal">PKR 0.00</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 4: Preview -->
+                <section class="preview-section hidden" id="step4">
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-header">
+                            <div class="preview-logo">ZM MAHAL</div>
+                            <div class="preview-subtitle">PROFESSIONAL CLOTHING BUSINESS</div>
                         </div>
                         
-                        <table class="preview-table">
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Price (PKR)</th>
-                                    <th>Amount (PKR)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="previewItems">
-                                <!-- Items will be added here -->
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="3" style="text-align: right;"><strong>Subtotal:</strong></td>
-                                    <td id="previewSubtotal">0.00</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align: right;"><strong>Tax:</strong></td>
-                                    <td id="previewTax">0.00</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align: right;"><strong>Shipping:</strong></td>
-                                    <td id="previewShipping">0.00</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
-                                    <td id="previewTotal">0.00</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        
-                        <div class="preview-footer">
-                            <p>Thank you for your business!</p>
-                            <p><em>All payments should be made within 7 days of invoice date.</em></p>
-                            <div class="preview-signature">
-                                <p>ZM Mahal</p>
-                                <div class="signature-line"></div>
-                                <p>Authorized Signature</p>
+                        <div class="preview-content">
+                            <div class="preview-info">
+                                <div class="preview-from">
+                                    <h3>From</h3>
+                                    <p><strong>ZM Mahal</strong><br>
+                                    Professional Clothing Store</p>
+                                </div>
+                                <div class="preview-to">
+                                    <h3>To</h3>
+                                    <p id="previewBuyer">[Buyer Name]</p>
+                                    <p id="previewDate">Date: [Date]</p>
+                                    <p id="previewType">Type: [Type]</p>
+                                </div>
+                            </div>
+                            
+                            <table class="preview-table">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price (PKR)</th>
+                                        <th>Amount (PKR)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="previewItems">
+                                    <!-- Items will be added here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;"><strong>Subtotal:</strong></td>
+                                        <td id="previewSubtotal">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;"><strong>Tax:</strong></td>
+                                        <td id="previewTax">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;"><strong>Shipping:</strong></td>
+                                        <td id="previewShipping">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: right;"><strong>TOTAL AMOUNT:</strong></td>
+                                        <td id="previewTotal">0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            
+                            <div class="preview-footer">
+                                <p>Thank you for your business!</p>
+                                <p><em>Payment is due within 7 days of invoice date.</em></p>
+                                <div class="preview-signature">
+                                    <p>ZM Mahal</p>
+                                    <div class="signature-line"></div>
+                                    <p>Authorized Signature</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
 
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <button class="nav-btn-secondary" id="prevBtn" disabled>
-                ← Back
-            </button>
-            <button class="nav-btn-primary" id="nextBtn">
-                Next →
-            </button>
-        </nav>
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <div class="nav-buttons-wrapper">
+                <button class="nav-btn nav-btn-secondary" id="prevBtn" disabled>
+                    ← Previous
+                </button>
+                <button class="nav-btn nav-btn-primary" id="nextBtn">
+                    Next →
+                </button>
+            </div>
+        </div>
 
-        <!-- Action Sheet for Export -->
-        <div class="overlay" id="overlay"></div>
-        <div class="action-sheet" id="actionSheet">
-            <div class="action-sheet-header">Export Invoice</div>
-            <div class="action-sheet-content">
-                <div class="action-option" data-action="print">
-                    🖨️ Print Invoice
+        <!-- Export Modal -->
+        <div class="export-modal" id="exportModal">
+            <div class="export-content">
+                <div class="export-header">
+                    <h3>Export Invoice</h3>
+                    <p>Choose how you want to export your invoice</p>
                 </div>
-                <div class="action-option" data-action="jpg">
-                    📷 Save as JPG
+                <div class="export-options">
+                    <div class="export-option" data-action="print">
+                        <div class="export-icon">🖨️</div>
+                        <div class="export-label">Print</div>
+                        <div class="export-desc">Print directly or save as PDF</div>
+                    </div>
+                    <div class="export-option" data-action="jpg">
+                        <div class="export-icon">📷</div>
+                        <div class="export-label">Save as JPG</div>
+                        <div class="export-desc">High-quality image file</div>
+                    </div>
+                    <div class="export-option" data-action="pdf">
+                        <div class="export-icon">📄</div>
+                        <div class="export-label">Save as PDF</div>
+                        <div class="export-desc">Professional PDF document</div>
+                    </div>
+                    <div class="export-option" data-action="whatsapp">
+                        <div class="export-icon">💬</div>
+                        <div class="export-label">Share on WhatsApp</div>
+                        <div class="export-desc">Send directly via WhatsApp</div>
+                    </div>
                 </div>
-                <div class="action-option" data-action="pdf">
-                    📄 Save as PDF
-                </div>
-                <div class="action-option" data-action="share">
-                    📤 Share Invoice
-                </div>
-                <div class="action-cancel" id="cancelAction">
-                    Cancel
+                <div class="export-footer">
+                    <button class="export-cancel" id="exportCancel">Cancel</button>
                 </div>
             </div>
         </div>
@@ -1028,17 +1322,24 @@
 
         <!-- Loading -->
         <div class="loading" id="loading">
-            <div class="spinner"></div>
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <div class="loading-text" id="loadingText">Processing...</div>
+            </div>
         </div>
     </div>
 
+    <!-- External Libraries -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script>
-        // Global variables
+        // ===== Global Variables =====
         let currentStep = 1;
         let items = [];
         let isDarkMode = false;
 
-        // Initialize app
+        // ===== Initialize App =====
         document.addEventListener('DOMContentLoaded', function() {
             // Set today's date
             const today = new Date();
@@ -1051,22 +1352,19 @@
             addNewItem();
             updateCalculations();
             
-            // Initialize
+            // Initialize everything
             initEventListeners();
             initTheme();
-            updateStepIndicator();
+            updateProgressLine();
+            updateNavigation();
             
-            // Fix iOS input zoom
-            document.addEventListener('focusin', function(e) {
-                if (e.target.matches('input') || e.target.matches('textarea')) {
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                    }, 100);
-                }
-            });
+            // iOS specific fixes
+            if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                fixIOSIssues();
+            }
         });
 
-        // Format PKR
+        // ===== Helper Functions =====
         function formatPKR(amount) {
             return 'PKR ' + parseFloat(amount).toLocaleString('en-PK', {
                 minimumFractionDigits: 2,
@@ -1074,7 +1372,6 @@
             });
         }
 
-        // Format number without currency symbol
         function formatNumber(amount) {
             return parseFloat(amount).toLocaleString('en-PK', {
                 minimumFractionDigits: 2,
@@ -1082,7 +1379,6 @@
             });
         }
 
-        // Format date as dd/mm/yyyy
         function formatDate(dateString) {
             const date = new Date(dateString);
             const day = String(date.getDate()).padStart(2, '0');
@@ -1091,30 +1387,36 @@
             return `${day}/${month}/${year}`;
         }
 
-        // Show toast
-        function showToast(message, type = 'info', duration = 3000) {
+        function showToast(message, duration = 3000) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.className = `toast show`;
+            toast.classList.add('show');
             
             setTimeout(() => {
                 toast.classList.remove('show');
             }, duration);
         }
 
-        // Show loading
-        function showLoading() {
+        function showLoading(text = 'Processing...') {
+            document.getElementById('loadingText').textContent = text;
             document.getElementById('loading').classList.add('show');
         }
 
-        // Hide loading
         function hideLoading() {
             document.getElementById('loading').classList.remove('show');
         }
 
-        // Update step indicator
-        function updateStepIndicator() {
-            document.querySelectorAll('.step').forEach((step, index) => {
+        // ===== Progress Management =====
+        function updateProgressLine() {
+            const progressLine = document.getElementById('progressLine');
+            const steps = document.querySelectorAll('.step');
+            const activeStep = currentStep - 1;
+            const totalSteps = steps.length - 1;
+            const width = (activeStep / totalSteps) * 100;
+            
+            progressLine.style.width = `${width}%`;
+            
+            steps.forEach((step, index) => {
                 step.classList.remove('active', 'completed');
                 if (index + 1 === currentStep) {
                     step.classList.add('active');
@@ -1124,10 +1426,57 @@
             });
         }
 
-        // Show step
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const buyerName = document.getElementById('buyerName').value.trim();
+                    const date = document.getElementById('invoiceDate').value;
+                    
+                    if (!buyerName) {
+                        showToast('Please enter buyer name');
+                        return false;
+                    }
+                    
+                    if (!date) {
+                        showToast('Please select date');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 2:
+                    if (items.length === 0) {
+                        showToast('Please add at least one item');
+                        return false;
+                    }
+                    
+                    for (let i = 0; i < items.length; i++) {
+                        if (!items[i].description || items[i].description.trim() === '') {
+                            showToast(`Please enter description for item ${i + 1}`);
+                            return false;
+                        }
+                        
+                        if (!items[i].quantity || parseFloat(items[i].quantity) <= 0) {
+                            showToast(`Please enter valid quantity for item ${i + 1}`);
+                            return false;
+                        }
+                        
+                        if (!items[i].rate || parseFloat(items[i].rate) < 0) {
+                            showToast(`Please enter valid price for item ${i + 1}`);
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+
         function showStep(step) {
             // Hide all steps
-            document.querySelectorAll('.form-section, .items-section, .summary-card, .preview-section').forEach(section => {
+            document.querySelectorAll('.form-section, .items-section, .summary-section, .preview-section').forEach(section => {
                 section.classList.add('hidden');
             });
             
@@ -1137,11 +1486,33 @@
                 stepElement.classList.remove('hidden');
             }
             
-            // Update navigation buttons
+            // Update progress and navigation
+            updateProgressLine();
             updateNavigation();
+            
+            // Scroll to top
+            document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Update navigation
+        function nextStep() {
+            if (!validateStep(currentStep)) return;
+            
+            if (currentStep < 4) {
+                currentStep++;
+                showStep(currentStep);
+                updateCalculations();
+            } else {
+                openExportModal();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
         function updateNavigation() {
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -1150,92 +1521,14 @@
             
             if (currentStep === 4) {
                 nextBtn.textContent = 'Export Invoice';
-                nextBtn.classList.add('nav-btn-primary');
+                nextBtn.className = 'nav-btn nav-btn-export';
             } else {
                 nextBtn.textContent = 'Next →';
-                nextBtn.classList.add('nav-btn-primary');
+                nextBtn.className = 'nav-btn nav-btn-primary';
             }
         }
 
-        // Validate current step
-        function validateStep(step) {
-            switch(step) {
-                case 1:
-                    const buyerName = document.getElementById('buyerName').value.trim();
-                    const date = document.getElementById('invoiceDate').value;
-                    
-                    if (!buyerName) {
-                        showToast('Please enter buyer name', 'error');
-                        return false;
-                    }
-                    
-                    if (!date) {
-                        showToast('Please select date', 'error');
-                        return false;
-                    }
-                    
-                    return true;
-                    
-                case 2:
-                    if (items.length === 0) {
-                        showToast('Please add at least one item', 'error');
-                        return false;
-                    }
-                    
-                    // Check if all items have description and price
-                    for (let i = 0; i < items.length; i++) {
-                        if (!items[i].description || items[i].description.trim() === '') {
-                            showToast(`Please enter description for item ${i + 1}`, 'error');
-                            return false;
-                        }
-                        
-                        if (!items[i].quantity || parseFloat(items[i].quantity) <= 0) {
-                            showToast(`Please enter valid quantity for item ${i + 1}`, 'error');
-                            return false;
-                        }
-                        
-                        if (!items[i].rate || parseFloat(items[i].rate) < 0) {
-                            showToast(`Please enter valid price for item ${i + 1}`, 'error');
-                            return false;
-                        }
-                    }
-                    
-                    return true;
-                    
-                case 3:
-                case 4:
-                    return true;
-            }
-            
-            return true;
-        }
-
-        // Next step
-        function nextStep() {
-            if (!validateStep(currentStep)) {
-                return;
-            }
-            
-            if (currentStep < 4) {
-                currentStep++;
-                updateStepIndicator();
-                showStep(currentStep);
-                updateCalculations();
-            } else {
-                openActionSheet();
-            }
-        }
-
-        // Previous step
-        function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateStepIndicator();
-                showStep(currentStep);
-            }
-        }
-
-        // Add new item
+        // ===== Item Management =====
         function addNewItem() {
             const item = {
                 id: Date.now() + Math.random(),
@@ -1248,16 +1541,13 @@
             items.push(item);
             renderItems();
             updateCalculations();
-            showToast('Item added', 'success');
         }
 
-        // Update item
         function updateItem(id, field, value) {
             const item = items.find(i => i.id === id);
             if (item) {
                 item[field] = value;
                 
-                // Calculate amount
                 if (field === 'quantity' || field === 'rate') {
                     const qty = parseFloat(item.quantity) || 0;
                     const rate = parseFloat(item.rate) || 0;
@@ -1268,20 +1558,18 @@
             }
         }
 
-        // Remove item
         function removeItem(id) {
             if (items.length <= 1) {
-                showToast('At least one item is required', 'error');
+                showToast('At least one item is required');
                 return;
             }
             
             items = items.filter(item => item.id !== id);
             renderItems();
             updateCalculations();
-            showToast('Item removed', 'success');
+            showToast('Item removed');
         }
 
-        // Render items
         function renderItems() {
             const itemsList = document.getElementById('itemsList');
             const emptyItems = document.getElementById('emptyItems');
@@ -1342,31 +1630,22 @@
             });
         }
 
-        // Update calculations
+        // ===== Calculations =====
         function updateCalculations() {
-            // Calculate totals
             let totalQty = 0;
             let subtotal = 0;
             
             items.forEach(item => {
                 const qty = parseFloat(item.quantity) || 0;
                 const rate = parseFloat(item.rate) || 0;
-                
                 totalQty += qty;
                 subtotal += qty * rate;
             });
             
-            // Get tax rate
             const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
-            document.getElementById('taxPercent').textContent = taxRate;
-            
-            // Get buyer type
             const buyerType = document.getElementById('buyerType').value;
-            
-            // Get shipping
             let shipping = parseFloat(document.getElementById('shippingCost').value) || 0;
             
-            // Apply pickup rules
             if (buyerType === 'pickup') {
                 shipping = 0;
                 document.getElementById('shippingCost').value = 0;
@@ -1375,29 +1654,24 @@
                 document.getElementById('shippingCost').readOnly = false;
             }
             
-            // Calculate tax (only for COD, optional for others)
             let tax = 0;
             if (buyerType === 'cod' && taxRate > 0) {
                 tax = subtotal * (taxRate / 100);
             }
             
-            // Calculate grand total
             const grandTotal = subtotal + tax + shipping;
             
-            // Update summary
+            document.getElementById('taxPercent').textContent = taxRate;
             document.getElementById('totalQuantity').textContent = `${totalQty} pcs`;
             document.getElementById('subtotal').textContent = formatPKR(subtotal);
             document.getElementById('taxAmount').textContent = formatPKR(tax);
             document.getElementById('shippingAmount').textContent = formatPKR(shipping);
             document.getElementById('grandTotal').textContent = formatPKR(grandTotal);
             
-            // Update preview
-            updatePreview(subtotal, tax, shipping, grandTotal, totalQty);
+            updatePreview(subtotal, tax, shipping, grandTotal);
         }
 
-        // Update preview
-        function updatePreview(subtotal, tax, shipping, grandTotal, totalQty) {
-            // Update buyer info
+        function updatePreview(subtotal, tax, shipping, grandTotal) {
             document.getElementById('previewBuyer').textContent = 
                 document.getElementById('buyerName').value || '[Buyer Name]';
             
@@ -1405,7 +1679,6 @@
                 `Date: ${document.getElementById('invoiceDate').value ? 
                     formatDate(document.getElementById('invoiceDate').value) : '[Date]'}`;
             
-            // Update buyer type
             const buyerType = document.getElementById('buyerType').value;
             let typeText = '';
             switch(buyerType) {
@@ -1415,7 +1688,6 @@
             }
             document.getElementById('previewType').textContent = `Type: ${typeText}`;
             
-            // Update items table
             const previewItems = document.getElementById('previewItems');
             previewItems.innerHTML = '';
             
@@ -1432,74 +1704,64 @@
                 }
             });
             
-            // Update totals
             document.getElementById('previewSubtotal').textContent = formatNumber(subtotal);
             document.getElementById('previewTax').textContent = formatNumber(tax);
             document.getElementById('previewShipping').textContent = formatNumber(shipping);
             document.getElementById('previewTotal').textContent = formatNumber(grandTotal);
         }
 
-        // Open action sheet
-        function openActionSheet() {
-            document.getElementById('overlay').classList.add('show');
-            document.getElementById('actionSheet').classList.add('show');
+        // ===== Export Functions =====
+        function openExportModal() {
+            document.getElementById('exportModal').classList.add('show');
         }
 
-        // Close action sheet
-        function closeActionSheet() {
-            document.getElementById('overlay').classList.remove('show');
-            document.getElementById('actionSheet').classList.remove('show');
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.remove('show');
         }
 
-        // Save as JPG - FIXED VERSION
-        async function saveAsJPG() {
-            showLoading();
+        async function exportAsJPG() {
+            showLoading('Generating JPG...');
             
             try {
-                // Store original styles
+                const preview = document.getElementById('previewContainer');
+                
+                // Backup original styles
                 const originalStyles = {
-                    width: document.querySelector('.preview-container').style.width,
-                    minHeight: document.querySelector('.preview-container').style.minHeight,
-                    margin: document.querySelector('.preview-container').style.margin
+                    width: preview.style.width,
+                    minHeight: preview.style.minHeight,
+                    margin: preview.style.margin
                 };
                 
                 // Set exact A4 dimensions
-                const preview = document.querySelector('.preview-container');
                 preview.style.width = '210mm';
                 preview.style.minHeight = '297mm';
                 preview.style.margin = '0';
-                preview.style.boxSizing = 'border-box';
                 
-                // Use html2canvas
                 const canvas = await html2canvas(preview, {
-                    scale: 2,
+                    scale: 3,
                     useCORS: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    allowTaint: true,
-                    foreignObjectRendering: false
+                    allowTaint: false
                 });
                 
                 // Generate filename
                 const buyerName = document.getElementById('buyerName').value.trim();
                 const cleanName = buyerName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
                 const date = document.getElementById('invoiceDate').value;
-                const fileName = `ZM_Mahal_Invoice_${cleanName}_${date}.jpg`;
+                const fileName = `ZM_Invoice_${cleanName}_${date}.jpg`;
                 
                 // Create download link
                 const link = document.createElement('a');
                 link.download = fileName;
-                
-                // Convert canvas to JPG
-                const imageData = canvas.toDataURL('image/jpeg', 1.0);
-                link.href = imageData;
+                link.href = canvas.toDataURL('image/jpeg', 1.0);
                 
                 // Trigger download
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 
-                showToast('Invoice saved as JPG', 'success');
+                showToast('Invoice saved as JPG');
                 
                 // Restore original styles
                 setTimeout(() => {
@@ -1510,47 +1772,44 @@
                 
             } catch (error) {
                 console.error('JPG Error:', error);
-                showToast('Error saving JPG. Please try again.', 'error');
+                showToast('Error saving JPG');
             } finally {
                 hideLoading();
-                closeActionSheet();
+                closeExportModal();
             }
         }
 
-        // Save as PDF - FIXED VERSION
-        async function saveAsPDF() {
-            showLoading();
+        async function exportAsPDF() {
+            showLoading('Generating PDF...');
             
             try {
-                // Store original styles
+                const preview = document.getElementById('previewContainer');
+                
+                // Backup original styles
                 const originalStyles = {
-                    width: document.querySelector('.preview-container').style.width,
-                    minHeight: document.querySelector('.preview-container').style.minHeight,
-                    margin: document.querySelector('.preview-container').style.margin
+                    width: preview.style.width,
+                    minHeight: preview.style.minHeight,
+                    margin: preview.style.margin
                 };
                 
                 // Set exact A4 dimensions
-                const preview = document.querySelector('.preview-container');
                 preview.style.width = '210mm';
                 preview.style.minHeight = '297mm';
                 preview.style.margin = '0';
-                preview.style.boxSizing = 'border-box';
                 
-                // Use html2canvas
                 const canvas = await html2canvas(preview, {
-                    scale: 2,
+                    scale: 3,
                     useCORS: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    allowTaint: true,
-                    foreignObjectRendering: false
+                    allowTaint: false
                 });
                 
                 // Generate filename
                 const buyerName = document.getElementById('buyerName').value.trim();
                 const cleanName = buyerName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
                 const date = document.getElementById('invoiceDate').value;
-                const fileName = `ZM_Mahal_Invoice_${cleanName}_${date}.pdf`;
+                const fileName = `ZM_Invoice_${cleanName}_${date}.pdf`;
                 
                 // Create PDF
                 const { jsPDF } = window.jspdf;
@@ -1562,14 +1821,12 @@
                 
                 const imgWidth = 210;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
-                
                 const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
                 
-                // Save PDF
+                pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
                 pdf.save(fileName);
                 
-                showToast('Invoice saved as PDF', 'success');
+                showToast('Invoice saved as PDF');
                 
                 // Restore original styles
                 setTimeout(() => {
@@ -1580,62 +1837,104 @@
                 
             } catch (error) {
                 console.error('PDF Error:', error);
-                showToast('Error saving PDF. Please try again.', 'error');
+                showToast('Error saving PDF');
             } finally {
                 hideLoading();
-                closeActionSheet();
+                closeExportModal();
             }
         }
 
-        // Print invoice
         function printInvoice() {
-            if (validateStep(4)) {
-                window.print();
-                closeActionSheet();
-            }
+            window.print();
+            closeExportModal();
         }
 
-        // Share invoice
-        async function shareInvoice() {
+        async function shareOnWhatsApp() {
+            showLoading('Preparing for WhatsApp...');
+            
             try {
+                const preview = document.getElementById('previewContainer');
+                
+                // Backup original styles
+                const originalStyles = {
+                    width: preview.style.width,
+                    minHeight: preview.style.minHeight,
+                    margin: preview.style.margin
+                };
+                
+                // Set exact A4 dimensions
+                preview.style.width = '210mm';
+                preview.style.minHeight = '297mm';
+                preview.style.margin = '0';
+                
+                const canvas = await html2canvas(preview, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    allowTaint: false
+                });
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.9);
+                
+                // Create temporary link for sharing
                 const buyerName = document.getElementById('buyerName').value.trim();
                 const date = document.getElementById('invoiceDate').value;
                 const total = document.getElementById('grandTotal').textContent;
                 
-                const shareText = `Invoice from ZM Mahal\nBuyer: ${buyerName}\nDate: ${date}\nTotal: ${total}\n\nGenerated using ZM Mahal Invoice Generator`;
+                // WhatsApp message
+                const message = `Invoice from ZM Mahal%0ABuyer: ${buyerName}%0ADate: ${date}%0ATotal: ${total}%0A%0A`;
                 
-                if (navigator.share) {
-                    await navigator.share({
-                        title: 'Invoice from ZM Mahal',
-                        text: shareText
-                    });
+                // Create blob for iOS
+                if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                    const blob = await (await fetch(imgData)).blob();
+                    const file = new File([blob], 'invoice.jpg', { type: 'image/jpeg' });
+                    
+                    if (navigator.share) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Invoice from ZM Mahal',
+                            text: `Invoice from ZM Mahal\nBuyer: ${buyerName}\nDate: ${date}\nTotal: ${total}`
+                        });
+                    }
                 } else {
-                    // Copy to clipboard as fallback
-                    await navigator.clipboard.writeText(shareText);
-                    showToast('Invoice details copied to clipboard', 'success');
+                    // For Android/Desktop - open WhatsApp with image
+                    const link = document.createElement('a');
+                    link.href = `https://wa.me/?text=${message}`;
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
                 }
+                
+                showToast('Opening WhatsApp...');
+                
+                // Restore original styles
+                setTimeout(() => {
+                    preview.style.width = originalStyles.width;
+                    preview.style.minHeight = originalStyles.minHeight;
+                    preview.style.margin = originalStyles.margin;
+                }, 100);
+                
             } catch (error) {
-                if (error.name !== 'AbortError') {
-                    showToast('Error sharing invoice', 'error');
-                }
+                console.error('WhatsApp Error:', error);
+                showToast('Error sharing on WhatsApp');
+            } finally {
+                hideLoading();
+                closeExportModal();
             }
-            
-            closeActionSheet();
         }
 
-        // Initialize theme
+        // ===== Theme Management =====
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
             if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
                 enableDarkMode();
-            } else {
-                disableDarkMode();
             }
         }
 
-        // Toggle theme
         function toggleTheme() {
             if (isDarkMode) {
                 disableDarkMode();
@@ -1658,62 +1957,8 @@
             document.getElementById('themeToggle').textContent = '🌓';
         }
 
-        // Initialize event listeners
-        function initEventListeners() {
-            // Navigation buttons
-            document.getElementById('prevBtn').addEventListener('click', prevStep);
-            document.getElementById('nextBtn').addEventListener('click', nextStep);
-            
-            // Add item buttons
-            document.getElementById('addItemBtn').addEventListener('click', addNewItem);
-            document.getElementById('addFirstItem').addEventListener('click', addNewItem);
-            
-            // Input changes
-            document.getElementById('buyerName').addEventListener('input', updateCalculations);
-            document.getElementById('invoiceDate').addEventListener('change', updateCalculations);
-            document.getElementById('buyerType').addEventListener('change', updateCalculations);
-            document.getElementById('taxRate').addEventListener('input', updateCalculations);
-            document.getElementById('shippingCost').addEventListener('input', updateCalculations);
-            
-            // Theme toggle
-            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            
-            // Action sheet
-            document.getElementById('overlay').addEventListener('click', closeActionSheet);
-            document.getElementById('cancelAction').addEventListener('click', closeActionSheet);
-            
-            // Export options
-            document.querySelectorAll('.action-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const action = this.dataset.action;
-                    
-                    switch(action) {
-                        case 'print':
-                            printInvoice();
-                            break;
-                        case 'jpg':
-                            saveAsJPG();
-                            break;
-                        case 'pdf':
-                            saveAsPDF();
-                            break;
-                        case 'share':
-                            shareInvoice();
-                            break;
-                    }
-                });
-            });
-            
-            // Prevent form submission
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                }
-            });
-        }
-
-        // iOS specific fixes
-        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+        // ===== iOS Fixes =====
+        function fixIOSIssues() {
             // Fix viewport height
             function setAppHeight() {
                 const doc = document.documentElement;
@@ -1723,6 +1968,116 @@
             window.addEventListener('resize', setAppHeight);
             window.addEventListener('orientationchange', setAppHeight);
             setAppHeight();
+            
+            // Fix input zoom
+            document.addEventListener('focusin', function(e) {
+                if (e.target.matches('input') || e.target.matches('textarea')) {
+                    setTimeout(() => {
+                        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            });
+        }
+
+        // ===== Event Listeners =====
+        function initEventListeners() {
+            // Navigation
+            document.getElementById('prevBtn').addEventListener('click', prevStep);
+            document.getElementById('nextBtn').addEventListener('click', nextStep);
+            
+            // Items
+            document.getElementById('addItemBtn').addEventListener('click', addNewItem);
+            document.getElementById('addFirstItem').addEventListener('click', addNewItem);
+            
+            // Input changes
+            const inputs = ['buyerName', 'invoiceDate', 'buyerType', 'taxRate', 'shippingCost'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updateCalculations);
+                document.getElementById(id).addEventListener('change', updateCalculations);
+            });
+            
+            // Theme
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Export modal
+            document.getElementById('exportCancel').addEventListener('click', closeExportModal);
+            document.getElementById('exportModal').addEventListener('click', function(e) {
+                if (e.target === this) closeExportModal();
+            });
+            
+            // Export options
+            document.querySelectorAll('.export-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const action = this.dataset.action;
+                    
+                    switch(action) {
+                        case 'print':
+                            printInvoice();
+                            break;
+                        case 'jpg':
+                            exportAsJPG();
+                            break;
+                        case 'pdf':
+                            exportAsPDF();
+                            break;
+                        case 'whatsapp':
+                            shareOnWhatsApp();
+                            break;
+                    }
+                });
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    nextStep();
+                }
+                
+                if (e.key === 'Escape') {
+                    if (document.getElementById('exportModal').classList.contains('show')) {
+                        closeExportModal();
+                    }
+                }
+                
+                // Arrow key navigation
+                if (e.key === 'ArrowRight' && !e.target.matches('input, textarea')) {
+                    e.preventDefault();
+                    nextStep();
+                }
+                
+                if (e.key === 'ArrowLeft' && !e.target.matches('input, textarea')) {
+                    e.preventDefault();
+                    prevStep();
+                }
+            });
+            
+            // Swipe gestures for mobile
+            let touchStartX = 0;
+            let touchStartY = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                const touchEndX = e.changedTouches[0].screenX;
+                const touchEndY = e.changedTouches[0].screenY;
+                const diffX = touchStartX - touchEndX;
+                const diffY = touchStartY - touchEndY;
+                
+                // Only detect horizontal swipes with minimal vertical movement
+                if (Math.abs(diffX) > 50 && Math.abs(diffY) < 50) {
+                    if (diffX > 0) {
+                        // Swipe left
+                        nextStep();
+                    } else {
+                        // Swipe right
+                        prevStep();
+                    }
+                }
+            });
         }
     </script>
 </body>
